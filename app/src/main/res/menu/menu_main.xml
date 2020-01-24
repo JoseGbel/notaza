@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.MainActivity">
+    <item
+        android:id="@+id/actionsearch_main"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:orderInCategory="11"
+        android:title="@string/action_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/actionmore_spinner"
+        android:icon="@drawable/ic_more_vert_black_24dp"
+        android:orderInCategory="12"
+        android:title="@string/action_more"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="always" />
+</menu>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mstb="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <android.support.v7.widget.Toolbar android:layout_width="match_parent"
+            android:id="@+id/add_new_skill_toolbar"
+            android:layout_height="?attr/actionBarSize"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@android:color/white"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+        xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/experienceSegmentedGroup"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        segmentedgroup:sc_border_width="2dp"
+        segmentedgroup:sc_corner_radius="5dp"
+        segmentedgroup:sc_checked_text_color="@color/buttonLabel"
+        segmentedgroup:sc_tint_color="@color/colorPrimary">
+
+        <RadioButton
+            android:id="@+id/noviceBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/novice"
+            style="@style/RadioButton" />
+
+        <RadioButton
+            android:id="@+id/beginnerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/beginner"
+            style="@style/RadioButton" />
+
+        <RadioButton
+            android:id="@+id/competentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/competent"
+            style="@style/RadioButton" />
+
+        <RadioButton
+            android:id="@+id/proficientBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/proficient"
+            style="@style/RadioButton" />
+
+        <RadioButton
+            android:id="@+id/expertBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expert"
+            style="@style/RadioButton" />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+    <EditText
+        android:id="@+id/edit_skill_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/hint_skill"
+        android:inputType="textAutoComplete"
+        android:padding="@dimen/small_padding"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/big_padding"
+        android:layout_marginStart="@dimen/marginHorizontalForNewSkillForm"
+        android:layout_marginEnd="@dimen/marginHorizontalForNewSkillForm"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/edit_skill_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/hint_description"
+        android:inputType="textAutoComplete"
+        android:padding="@dimen/small_padding"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/big_padding"
+        android:layout_marginStart="@dimen/marginHorizontalForNewSkillForm"
+        android:layout_marginEnd="@dimen/marginHorizontalForNewSkillForm"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="@string/button_continue"
+        android:textColor="@color/buttonLabel"
+        android:layout_marginStart="@dimen/marginHorizontalForNewSkillForm"
+        android:layout_marginEnd="@dimen/marginHorizontalForNewSkillForm"/>
+</LinearLayout>

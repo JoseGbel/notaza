@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">SkillsTracker</string>
+    <string name="hint_skill">Skill...</string>
+    <string name="hint_description">Description...</string>
+    <string name="button_continue">Continue</string>
+    <string name="empty_skill_name">Skill not saved because it is empty.</string>
+    <string name="action_search">Search</string>
+    <string name="action_more">Menu</string>
+    <string name="search_hint">Type to search…</string>
+    <string name="new_skill_title">New skill</string>
+    <string name="today">TODAY</string>
+    <string name="skillnotavailable">Skill not available</string>
+    <string name="hint_category">Category...</string>
+    <string name="errorselectingcategory">Error selecting category</string>
+    <string name="new_category_title">New Category</string>
+    <string name="novice">Novice</string>
+    <string name="beginner">Beginner</string>
+    <string name="competent">Competent</string>
+    <string name="proficient">Proficient</string>
+    <string name="expert">Expert</string>
+    <string name="empty_string"> </string>
+    <string name="selectExperiencePlease">Select level of expertise</string>
+    <string name="category_s_image">Category\'s image</string>
+    <string name="UnsplashStringName">Unsplash</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="delete_category">Delete Category</string>
+    <string name="category_menu">Category Menu</string>
+    <string name="todo">To-do</string>
+    <string name="places">Places</string>
+    <string name="skills">Skills</string>
+    <string name="notes">Notes</string>
+    <string name="categoryTypeSelectionNeeded">Select a type of list for this category</string>
+    <string name="edit">Edit</string>
+    <string name="category">category</string>
+    <string name="empty_category_name">Category not saved because name is empty</string>
+    <string-array name="more_items_drawer_activity">
+        <item>Edit Category</item>
+        <item>Delete Category</item>
+    </string-array>
+</resources>

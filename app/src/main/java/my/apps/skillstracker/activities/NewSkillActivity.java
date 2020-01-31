@@ -54,12 +54,13 @@ public class NewSkillActivity extends AppCompatActivity {
             case 2: //CATEGORY TYPE: SKILLS
                 mSegmentedGroup.setVisibility(View.VISIBLE);
                 break;
-            case 3: //CATEGORY TYPE: PLACES
-                mSegmentedGroup.setVisibility(View.GONE);
-                break;
-            case 4: //CATEGORY TYPE: TO-DO LIST
-                mSegmentedGroup.setVisibility(View.GONE);
-                break;
+                //TODO Places todo
+//            case 3: //CATEGORY TYPE: PLACES
+//                mSegmentedGroup.setVisibility(View.GONE);
+//                break;
+//            case 4: //CATEGORY TYPE: TO-DO LIST
+//                mSegmentedGroup.setVisibility(View.GONE);
+//                break;
             default:
                 mSegmentedGroup.setVisibility(View.GONE);
                 break;

@@ -136,12 +136,6 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
-        else{
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_category_name,
-                    Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -152,6 +146,7 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         super.onBackPressed();
+        finishAffinity();
     }
 
     @Override

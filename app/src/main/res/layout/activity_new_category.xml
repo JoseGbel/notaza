@@ -46,19 +46,20 @@
             android:text="@string/skills"
             style="@style/RadioButton" />
 
-        <RadioButton
-            android:id="@+id/placesBtnSegGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/places"
-            style="@style/RadioButton" />
+        <!-- TODO Places todo -->
+<!--        <RadioButton-->
+<!--            android:id="@+id/placesBtnSegGroup"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/places"-->
+<!--            style="@style/RadioButton" />-->
 
-        <RadioButton
-            android:id="@+id/toDoBtnSegGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/todo"
-            style="@style/RadioButton" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/toDoBtnSegGroup"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/todo"-->
+<!--            style="@style/RadioButton" />-->
     </info.hoang8f.android.segmented.SegmentedGroup>
 
     <EditText
@@ -88,20 +89,22 @@
 
     <Button
         android:id="@+id/continue_button_new_category"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Continue"
+        android:background="@color/colorAccent"
+        android:text="@string/continue1"
         android:textColor="@color/buttonLabel"
-        android:visibility="visible"/>
+        android:layout_gravity="center"
+        android:visibility="visible" />
 
     <Button
         android:visibility="gone"
         android:id="@+id/savebutton_newcategory"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Save"
+        android:background="@color/colorAccent"
+        android:text="@string/save"
+        android:layout_gravity="center"
         android:textColor="@color/buttonLabel" />
 
     <FrameLayout

@@ -136,6 +136,8 @@ public class PictureSelectionFragment extends Fragment
     //TODO fix back button on picture selection.
     //TODO hide the keyboard on picture selection.
 
+
+
     @Override
     public void onPictureSelected(final UnsplashPic unsplashPic,
                                   View currentView) {

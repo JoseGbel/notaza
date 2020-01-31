@@ -24,7 +24,8 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
     public static final String EXTRA_TYPE = "my.apps.skillstracker.CATEGORYTYPE";
 
     private EditText mEditCategoryNameView, mEditCategoryDescriptionView;
-
+    private Boolean pictureSelected = false;
+    private Boolean isReadyToSave = false;
     private String categoryName="";
     private String categoryDescription;
     private Button continueButton;
@@ -61,16 +62,17 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
                                 Toast.LENGTH_SHORT)
                                 .show();
                         break;
-                    case R.id.placesBtnSegGroup:
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "List of places are not available yet. " +
-                                        "You can add a list of places as a Note list",
-                                Toast.LENGTH_SHORT)
-                                .show();
-                        break;
-                    case R.id.toDoBtnSegGroup:
-                        break;
+                    //TODO Places todo
+//                    case R.id.placesBtnSegGroup:
+//                        Toast.makeText(
+//                                getApplicationContext(),
+//                                "List of places are not available yet. " +
+//                                        "You can add a list of places as a Note list",
+//                                Toast.LENGTH_SHORT)
+//                                .show();
+//                        break;
+//                    case R.id.toDoBtnSegGroup:
+//                        break;
                     default:
                         if (!TextUtils.isEmpty(mEditCategoryNameView.getText())) {
 
@@ -79,6 +81,7 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
 
                             continueButton.setVisibility(Button.GONE);
 
+                            pictureSelected = true;
                             Bundle bundle = new Bundle();
                             bundle.putString("categoryName", categoryName);
                             pictureSelectionFragment.setArguments(bundle);
@@ -135,12 +138,27 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(isReadyToSave){
+            isReadyToSave = false;
+            saveButton.setVisibility(View.GONE);
+        }
+        if (pictureSelected){
+            pictureSelected = false;
+            continueButton.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    @Override
     protected void onResume() { super.onResume(); }
 
     @Override
     public void onDataSent(UnsplashPic unsplashPic) {
         this.unsplashPicReceived = unsplashPic;
         saveButton.setVisibility(Button.VISIBLE);
+        isReadyToSave = true;
         if (getSupportFragmentManager().findFragmentById(R.id.fragment_container) != null){
             getSupportFragmentManager()
                     .beginTransaction()
@@ -176,10 +194,11 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
                 return 1;
             case R.id.skillsBtnSegGroup:
                 return 2;
-            case R.id.placesBtnSegGroup:
-                return 3;
-            case R.id.toDoBtnSegGroup:
-                return 4;
+            //TODO Places todo
+//            case R.id.placesBtnSegGroup:
+//                return 3;
+//            case R.id.toDoBtnSegGroup:
+//                return 4;
             default:
                 return 0;
         }

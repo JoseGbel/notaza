@@ -23,7 +23,7 @@ public class EditCategoryActivity extends AppCompatActivity {
     private EditText mEditCategoryNameView, mEditCategoryDescriptionView;
     private int id;
     private SegmentedGroup mSegmentedGroup;
-    private Button notesBtn, skillsBtn, placesBtn, todoBtn;
+    private Button notesBtn, skillsBtn; //TODO Places todo , placesBtn, todoBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,9 @@ public class EditCategoryActivity extends AppCompatActivity {
         mSegmentedGroup = findViewById(R.id.categoryTypeSegmentedGroup);
         notesBtn = findViewById(R.id.notesBtnSegGroup);
         skillsBtn = findViewById(R.id.skillsBtnSegGroup);
-        placesBtn = findViewById(R.id.placesBtnSegGroup);
-        todoBtn = findViewById(R.id.toDoBtnSegGroup);
+        //TODO Places todo
+//        placesBtn = findViewById(R.id.placesBtnSegGroup);
+//        todoBtn = findViewById(R.id.toDoBtnSegGroup);
 
         final Button button = findViewById(R.id.continue_button_new_category);
 
@@ -58,12 +59,13 @@ public class EditCategoryActivity extends AppCompatActivity {
             case 2:
                 skillsBtn.performClick();
                 break;
-            case 3:
-                placesBtn.performClick();
-                break;
-            case 4:
-                todoBtn.performClick();
-                break;
+            //TODO Places todo
+//            case 3:
+//                placesBtn.performClick();
+//                break;
+//            case 4:
+//                todoBtn.performClick();
+//                break;
             default:
                 break;
         }
@@ -79,15 +81,15 @@ public class EditCategoryActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT)
                             .show();
 
-                else { //TODO delete this IF once Places are implemented
-                    if (mSegmentedGroup.getCheckedRadioButtonId() == R.id.placesBtnSegGroup){
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "List of places are not available yet. " +
-                                        "You can add a list of places as a Note list",
-                                Toast.LENGTH_SHORT)
-                                .show();
-                    }else {
+                else { //TODO Places todo
+//                    if (mSegmentedGroup.getCheckedRadioButtonId() == R.id.placesBtnSegGroup){
+//                        Toast.makeText(
+//                                getApplicationContext(),
+//                                "List of places are not available yet. " +
+//                                        "You can add a list of places as a Note list",
+//                                Toast.LENGTH_SHORT)
+//                                .show();
+//                    }else {
                         Intent replyIntent = new Intent();
                         if (TextUtils.isEmpty(mEditCategoryNameView.getText()))
                             setResult(RESULT_CANCELED, replyIntent);
@@ -107,7 +109,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                             MainActivity.editingCategory = true;
                         }
                         finish();
-                    }
+                    //}
                 }
             }
         });
@@ -120,10 +122,11 @@ public class EditCategoryActivity extends AppCompatActivity {
                 return 1;
             case R.id.skillsBtnSegGroup:
                 return 2;
-            case R.id.placesBtnSegGroup:
-                return 3;
-            case R.id.toDoBtnSegGroup:
-                return 4;
+            //TODO Places todo
+//            case R.id.placesBtnSegGroup:
+//                return 3;
+//            case R.id.toDoBtnSegGroup:
+//                return 4;
             default:
                 return 0;
         }

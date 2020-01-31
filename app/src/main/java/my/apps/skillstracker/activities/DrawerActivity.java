@@ -137,11 +137,6 @@ public class DrawerActivity extends AppCompatActivity
                         bundle.getString(NewSkillActivity.EXTRA_CATEGORY));
 
                 mSkillViewModel.insert(skill);
-            } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        R.string.empty_skill_name,
-                        Toast.LENGTH_LONG).show();
             }
         }
 
@@ -154,11 +149,6 @@ public class DrawerActivity extends AppCompatActivity
                         bundle.getString(EditSkillActivity.EXTRA_NAME),
                         bundle.getString(EditSkillActivity.EXTRA_DESCRIPTION),
                         bundle.getInt(EditSkillActivity.EXTRA_EXPERIENCE)));
-            }else{
-                Toast.makeText(
-                        getApplicationContext(),
-                        R.string.empty_skill_name,
-                        Toast.LENGTH_LONG).show();
             }
         }
 

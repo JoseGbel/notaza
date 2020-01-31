@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">SkillsTracker</string>
+    <string name="hint_skill">Habilidad…</string>
+    <string name="hint_description">Descripción…</string>
+    <string name="button_continue">Continuar</string>
+    <string name="empty_skill_name">La habilidad no se pudo guardar porque estaba vacía.</string>
+    <string name="action_search">Buscar</string>
+    <string name="action_more">Menu</string>
+    <string name="search_hint">Introduzca una palabra…</string>
+    <string name="new_skill_title">Habilidad nueva</string>
+    <string name="today">HOY</string>
+    <string name="skillnotavailable">Habilidad no disponible</string>
+    <string name="hint_category">Categoría…</string>
+    <string name="errorselectingcategory">Error seleccionando categoría</string>
+    <string name="new_category_title">Nueva Categoría</string>
+    <string name="novice">Novato</string>
+    <string name="beginner">Principiante</string>
+    <string name="competent">Medio</string>
+    <string name="proficient">Competente</string>
+    <string name="expert">Experto</string>
+    <string name="empty_string"> </string>
+    <string name="selectExperiencePlease">Seleccione su nivel de experiencia</string>
+    <string name="category_s_image">Imagen de la categoría</string>
+    <string name="UnsplashStringName">Unsplash</string>
+    <string name="edit_category">Editar Categoría</string>
+    <string name="delete_category">Eliminar Categoría</string>
+    <string name="category_menu">Menu Categoría</string>
+    <string name="todo">Listas</string>
+    <string name="places">Lugares</string>
+    <string name="skills">Habilidades</string>
+    <string name="notes">Notas</string>
+    <string name="categoryTypeSelectionNeeded">Seleccione un tipo de lista para esta categoría</string>
+    <string name="edit">Editar</string>
+    <string name="category">categoría</string>
+    <string name="save">Guardar</string>
+    <string name="continue1">Continuar</string>
+    <string name="empty_category_name">La categoría no fue guardada porque el nombre estaba vacío</string>
+    <string-array name="more_items_drawer_activity">
+        <item>Editar Categoría</item>
+        <item>Eliminar Categoría</item>
+    </string-array>
+</resources>

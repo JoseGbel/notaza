@@ -5,10 +5,10 @@ import android.os.Parcelable;
 
 public class Links implements Parcelable {
 
-    private String self;
+    private String html;
 
     public Links(String self) {
-        this.self = self;
+        this.html = self;
     }
 
     public static final Creator<Links> CREATOR = new Creator<Links>() {
@@ -23,12 +23,12 @@ public class Links implements Parcelable {
         }
     };
 
-    public String getSelf() {
-        return self;
+    public String getHtml() {
+        return html;
     }
 
-    public void setSelf(String self) {
-        this.self = self;
+    public void setHtml(String html) {
+        this.html = html;
     }
 
     @Override
@@ -37,11 +37,11 @@ public class Links implements Parcelable {
     }
 
     public Links (Parcel in){
-        this.self = in.readString();
+        this.html = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.self);
+        dest.writeString(this.html);
     }
 }

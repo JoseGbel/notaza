@@ -1,9 +1,11 @@
 package my.apps.skillstracker.unsplashapi;
 
 import android.content.Context;
-import android.net.sip.SipSession;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +42,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        UnsplashPic pic = pictureList.get(i);
-        viewHolder.artistName.setText(pic.getUser().getUsername());
-        viewHolder.unsplash.setText(R.string.UnsplashStringName);
 
+        UnsplashPic pic = pictureList.get(i);
+
+        Spanned artistLink = Html.fromHtml("<a href=\"" + pic.getUser().getLinks().getHtml() + "\">" +
+                pic.getUser().getUsername() + "</a>");
+        Spanned unsplashLink = Html.fromHtml("<a href=\"https://unsplash.com/\">" +
+                context.getString(R.string.UnsplashStringName) + "</a>");
+//        viewHolder.artistName.setText(pic.getUser().getUsername());
+        viewHolder.artistName.setText(artistLink);
+        viewHolder.unsplash.setText(unsplashLink);
         Glide.with(context)
                 .load(pic.getUrls().getThumb())
                 .into(viewHolder.imageView);
@@ -77,6 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             artistName = itemView.findViewById(R.id.artist_name);
             unsplash = itemView.findViewById(R.id.unsplash_name);
 
+//            artistName.setMovementMethod(LinkMovementMethod.getInstance());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

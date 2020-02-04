@@ -16,6 +16,6 @@
 //
 //    @TypeConverter
 //    public static String toString(Links value) {
-//        return value == null ? null : value.getSelf();
+//        return value == null ? null : value.getHtml();
 //    }
 //}

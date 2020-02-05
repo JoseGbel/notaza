@@ -34,6 +34,14 @@
     <string name="category">categoría</string>
     <string name="save">Guardar</string>
     <string name="continue1">Continuar</string>
+    <string name="photo_by">Foto de \u0020</string>
+    <string name="unsplash_picture">foto unesplash</string>
+    <string name="on">\u0020 en \u0020</string>
+    <string name="noThanks">No, gracias</string>
+    <string name="remindMeLater">Recuérdamelo mas tarde</string>
+    <string name="Rate">Valorar\u0020</string>
+    <string name="enjoyUsing">Si disfruta usando </string>
+    <string name="pleaseRate">, por favor tómate un momento para valorarlo. Gracias por tu apoyo!</string>
     <string name="empty_category_name">La categoría no fue guardada porque el nombre estaba vacío</string>
     <string-array name="more_items_drawer_activity">
         <item>Editar Categoría</item>

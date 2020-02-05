@@ -31,6 +31,7 @@ import my.apps.skillstracker.R;
 import my.apps.skillstracker.repositories.CategoryRepository;
 import my.apps.skillstracker.repositories.CategoryViewModel;
 import my.apps.skillstracker.unsplashapi.model.UnsplashPic;
+import my.apps.skillstracker.utils.AppRater;
 
 //TODO clean up the code to make it more readable
 //TODO create an offline mode.
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         setFAB();
+
+        AppRater.app_launched(this);
     }
 
 

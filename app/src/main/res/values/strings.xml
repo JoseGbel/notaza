@@ -35,6 +35,14 @@
     <string name="empty_category_name">Category not saved because name is empty</string>
     <string name="save">Save</string>
     <string name="continue1">Continue</string>
+    <string name="noThanks">No, thanks</string>
+    <string name="remindMeLater">Remind me later</string>
+    <string name="Rate">Rate\u0020</string>
+    <string name="enjoyUsing">If you enjoy using\u0020</string>
+    <string name="pleaseRate">, please take a moment to rate it. Thanks for your support!</string>
+    <string name="photo_by">Photo by\u0020</string>
+    <string name="unsplash_picture">unsplash picture</string>
+    <string name="on">\u0020on\u0020</string>
     <string-array name="more_items_drawer_activity">
         <item>Edit Category</item>
         <item>Delete Category</item>

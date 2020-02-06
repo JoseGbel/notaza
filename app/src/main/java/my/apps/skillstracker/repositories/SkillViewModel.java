@@ -3,14 +3,10 @@ package my.apps.skillstracker.repositories;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.db.SimpleSQLiteQuery;
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.db.SupportSQLiteQuery;
 
 import java.util.List;
 
-import my.apps.skillstracker.Category;
-import my.apps.skillstracker.Skill;
+import my.apps.skillstracker.model.Skill;
 
 public class SkillViewModel extends AndroidViewModel {
 

@@ -1,4 +1,4 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import my.apps.skillstracker.R;
-import my.apps.skillstracker.Skill;
+import my.apps.skillstracker.model.Skill;
 import my.apps.skillstracker.utils.ParseExperience;
 
 public class SkillListAdapter
@@ -31,7 +31,7 @@ public class SkillListAdapter
     private SkillListAdapterListener listener;
     private Context context;
 
-    class SkillViewHolder extends RecyclerView.ViewHolder {
+    public class SkillViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout skillLinearLayout;
 
@@ -61,8 +61,8 @@ public class SkillListAdapter
 
     public List<Skill> getSkills() { return mSkills; }
 
-    SkillListAdapter(Context context,
-                     SkillListAdapterListener listener){
+    public SkillListAdapter(Context context,
+                            SkillListAdapterListener listener){
 
         this.context = context;
         mInflater = LayoutInflater.from(context);

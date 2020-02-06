@@ -4,7 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import java.util.List;
-import my.apps.skillstracker.Category;
+
+import my.apps.skillstracker.model.Category;
 
 public class CategoryViewModel extends AndroidViewModel {
 

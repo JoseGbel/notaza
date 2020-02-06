@@ -1,4 +1,4 @@
-package my.apps.skillstracker;
+package my.apps.skillstracker.repositories;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -6,6 +6,8 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import java.util.List;
+
+import my.apps.skillstracker.model.Skill;
 
 @Dao
 public interface SkillDao {
@@ -16,7 +18,7 @@ public interface SkillDao {
     @Delete
     void delete(Skill skill);
 
-    // This method is kept in case we need to delete all te skills in the future
+    // This method is kept in case deletion of all the skills in the future is needed
     @Query("DELETE FROM skill_table")
     void deleteAll();
 

@@ -43,6 +43,13 @@
     <string name="photo_by">Photo by\u0020</string>
     <string name="unsplash_picture">unsplash picture</string>
     <string name="on">\u0020on\u0020</string>
+    <string name="removedFromList">\u0020removed from the list!</string>
+    <string name="undo">UNDO</string>
+    <string name="selectThisPictureQuestion">Select this picture?</string>
+    <string name="YES">YES</string>
+    <string name="select_a_picture">Select a picture</string>
+    <string name="not_happy_search_for_more">Not happy?...Search for more</string>
+    <string name="search">Search</string>
     <string-array name="more_items_drawer_activity">
         <item>Edit Category</item>
         <item>Delete Category</item>

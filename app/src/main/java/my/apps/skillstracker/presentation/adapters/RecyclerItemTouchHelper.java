@@ -1,17 +1,17 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation.adapters;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import my.apps.skillstracker.Category;
-import my.apps.skillstracker.activities.SkillListAdapter;
+import my.apps.skillstracker.presentation.adapters.CategoryListAdapter;
+import my.apps.skillstracker.presentation.adapters.SkillListAdapter;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private RecyclerItemTouchHelperListener listener;
 
-    RecyclerItemTouchHelper(int dragDirs, int swipeDirs, RecyclerItemTouchHelperListener listener) {
+    public RecyclerItemTouchHelper(int dragDirs, int swipeDirs, RecyclerItemTouchHelperListener listener) {
         super(dragDirs, swipeDirs);
         this.listener = listener;
     }
@@ -70,7 +70,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onChildDraw(Canvas c, RecyclerView recyclerView,
                             RecyclerView.ViewHolder viewHolder, float dX, float dY,
                             int actionState, boolean isCurrentlyActive) {
-        //Using the same class for determing wether is a skill or a category what we are touching
+        //Using the same class for determine whether is a skill or a category what we are touching
         if (viewHolder.getClass() == SkillListAdapter.SkillViewHolder.class) {
             final View foregroundView = ((SkillListAdapter.SkillViewHolder) viewHolder).skillLinearLayout;
             getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,

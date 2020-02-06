@@ -12,10 +12,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import my.apps.skillstracker.Category;
-import my.apps.skillstracker.CategoryDao;
-import my.apps.skillstracker.Skill;
-import my.apps.skillstracker.SkillDao;
+import my.apps.skillstracker.model.Category;
+import my.apps.skillstracker.model.Skill;
 import my.apps.skillstracker.utils.DateTypeConverter;
 import my.apps.skillstracker.utils.UnsplashPicTypeConverter;
 

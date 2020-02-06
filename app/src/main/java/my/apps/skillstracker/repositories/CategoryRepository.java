@@ -4,9 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import java.util.List;
-import my.apps.skillstracker.Category;
-import my.apps.skillstracker.CategoryDao;
-import my.apps.skillstracker.SkillDao;
+import my.apps.skillstracker.model.Category;
 
 public class CategoryRepository {
 

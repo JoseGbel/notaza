@@ -6,15 +6,14 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import my.apps.skillstracker.Skill;
-import my.apps.skillstracker.SkillDao;
+import my.apps.skillstracker.model.Skill;
 
 public class SkillRepository {
 
     private SkillDao mSkillDao;
     private LiveData<List<Skill>> mAllSkills;
 
-    SkillRepository (Application application, String category){
+    public SkillRepository (Application application, String category){
 
         SkillRoomDatabase db = SkillRoomDatabase.getDatabase(application);
         mSkillDao = db.skillDao();

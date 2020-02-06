@@ -1,4 +1,4 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation.skill;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
-import my.apps.skillstracker.Category;
+import my.apps.skillstracker.model.Category;
 import my.apps.skillstracker.R;
 
 public class NewSkillActivity extends AppCompatActivity {

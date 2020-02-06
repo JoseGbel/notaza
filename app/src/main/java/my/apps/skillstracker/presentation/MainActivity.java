@@ -1,4 +1,4 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation;
 
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
@@ -21,13 +21,17 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import java.util.List;
 
-import my.apps.skillstracker.Category;
+import my.apps.skillstracker.model.Category;
 import my.apps.skillstracker.R;
+import my.apps.skillstracker.presentation.adapters.CategoryListAdapter;
+import my.apps.skillstracker.presentation.adapters.RecyclerItemTouchHelper;
+import my.apps.skillstracker.presentation.category.EditCategoryActivity;
+import my.apps.skillstracker.presentation.category.NewCategoryActivity;
+import my.apps.skillstracker.presentation.skill.SkillsDrawerActivity;
 import my.apps.skillstracker.repositories.CategoryRepository;
 import my.apps.skillstracker.repositories.CategoryViewModel;
 import my.apps.skillstracker.unsplashapi.model.UnsplashPic;
@@ -154,7 +158,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onCategorySelected(Category category) {
-        Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
+        Intent intent = new Intent(MainActivity.this, SkillsDrawerActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("Category", category.stringify());
         intent.putExtras(bundle);
@@ -171,7 +175,7 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
         if (editingCategory){
             Bundle bundle = getIntent().getExtras()
-                    .getBundle(DrawerActivity.EXTRA_BUNDLE_EDITED_CATEGORY);
+                    .getBundle(SkillsDrawerActivity.EXTRA_BUNDLE_EDITED_CATEGORY);
 
             String temp = bundle.getString(EditCategoryActivity.EXTRA_NAME);
             mCategoryViewModel.update(new CategoryRepository.MyTaskParams(
@@ -264,8 +268,8 @@ public class MainActivity extends AppCompatActivity
 //            mSkillViewModel.rawQuery(query);
 //            // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, name + " removed from the skills list!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+                    .make(coordinatorLayout, name + getString(R.string.removedFromList), Snackbar.LENGTH_LONG);
+            snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // undo is selected, restore the deleted skill

@@ -1,4 +1,4 @@
-package my.apps.skillstracker;
+package my.apps.skillstracker.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

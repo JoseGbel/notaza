@@ -1,14 +1,12 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,7 +20,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import my.apps.skillstracker.R;
-import my.apps.skillstracker.unsplashapi.RecyclerViewAdapter;
+import my.apps.skillstracker.presentation.adapters.RecyclerViewAdapter;
 import my.apps.skillstracker.unsplashapi.model.PictureResponse;
 import my.apps.skillstracker.unsplashapi.model.UnsplashPic;
 import my.apps.skillstracker.unsplashapi.service.PictureService;
@@ -73,8 +71,6 @@ public class PictureSelectionFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        button = getActivity().findViewById(R.id.searchBtn);
-        editText = getActivity().findViewById(R.id.editTextSearch);
         recyclerView = getActivity().findViewById(R.id.recyclerview);
         unsplashImageView = getActivity().findViewById(R.id.unsplash_imageview);
 
@@ -133,11 +129,6 @@ public class PictureSelectionFragment extends Fragment
         });
     }
 
-    //TODO fix back button on picture selection.
-    //TODO hide the keyboard on picture selection.
-
-
-
     @Override
     public void onPictureSelected(final UnsplashPic unsplashPic,
                                   View currentView) {
@@ -152,8 +143,8 @@ public class PictureSelectionFragment extends Fragment
         currentImageView.setImageAlpha(60);
         previousView = currentView;
         Snackbar snackbar = Snackbar
-                .make(recyclerView, "Select this picture?", Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("YES", new View.OnClickListener() {
+                .make(recyclerView, getString(R.string.selectThisPictureQuestion), Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(getString(R.string.YES), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentCallback.onDataSent(unsplashPic);

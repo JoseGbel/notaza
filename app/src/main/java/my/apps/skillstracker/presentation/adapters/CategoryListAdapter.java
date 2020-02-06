@@ -1,4 +1,4 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +18,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import my.apps.skillstracker.Category;
+import my.apps.skillstracker.model.Category;
 import my.apps.skillstracker.R;
 
 public class CategoryListAdapter
@@ -31,7 +30,7 @@ public class CategoryListAdapter
     private CategoryListAdapterListener listener;
     private Context context;
 
-    class CategoryViewHolder extends RecyclerView.ViewHolder {
+    public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
         CardView categoryCardView;
         TextView nameTv, descriptionTv;
@@ -60,8 +59,8 @@ public class CategoryListAdapter
 
     public List<Category> getCategories() { return mCategories; }
 
-    CategoryListAdapter(Context context,
-                        CategoryListAdapterListener listener){
+    public CategoryListAdapter(Context context,
+                               CategoryListAdapterListener listener){
 
         this.context = context;
         mInflater = LayoutInflater.from(context);

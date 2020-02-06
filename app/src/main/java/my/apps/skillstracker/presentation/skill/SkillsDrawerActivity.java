@@ -1,4 +1,4 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation.skill;
 
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
@@ -27,15 +27,19 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import my.apps.skillstracker.Category;
+import my.apps.skillstracker.model.Category;
 import my.apps.skillstracker.R;
-import my.apps.skillstracker.Skill;
+import my.apps.skillstracker.model.Skill;
+import my.apps.skillstracker.presentation.MainActivity;
+import my.apps.skillstracker.presentation.adapters.RecyclerItemTouchHelper;
+import my.apps.skillstracker.presentation.adapters.SkillListAdapter;
+import my.apps.skillstracker.presentation.category.EditCategoryActivity;
 import my.apps.skillstracker.repositories.CategoryViewModel;
 import my.apps.skillstracker.repositories.SkillRepository;
 import my.apps.skillstracker.repositories.SkillViewModel;
 import my.apps.skillstracker.repositories.SkillViewModelFactory;
 
-public class DrawerActivity extends AppCompatActivity
+public class SkillsDrawerActivity extends AppCompatActivity
         implements SkillListAdapter.SkillListAdapterListener,
         RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
@@ -114,7 +118,7 @@ public class DrawerActivity extends AppCompatActivity
                 // Get a reference of the current category
                 Bundle received = getIntent().getExtras();
                 Intent intent =
-                        new Intent (DrawerActivity.this, NewSkillActivity.class);
+                        new Intent (SkillsDrawerActivity.this, NewSkillActivity.class);
 
                 assert received != null;
                 intent.putExtras(received);
@@ -189,8 +193,8 @@ public class DrawerActivity extends AppCompatActivity
 
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, name + " removed from the skills list!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+                    .make(coordinatorLayout, name + getString(R.string.removedFromList), Snackbar.LENGTH_LONG);
+            snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -250,12 +254,12 @@ public class DrawerActivity extends AppCompatActivity
             case R.id.actionsearch_main:
                 return true;
             case R.id.delete_category_menu_item:
-                Toast.makeText(DrawerActivity.this,
+                Toast.makeText(SkillsDrawerActivity.this,
                         "Delete Category", Toast.LENGTH_SHORT)
                 .show();
                 return true;
             case R.id.edit_category_menu_item:
-                Intent intent = new Intent(DrawerActivity.this, EditCategoryActivity.class);
+                Intent intent = new Intent(SkillsDrawerActivity.this, EditCategoryActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", currentCategory.getMId());
                 bundle.putString("name", currentCategory.getMName());
@@ -295,7 +299,7 @@ public class DrawerActivity extends AppCompatActivity
     @Override
     public void onSkillSelected(Skill skill) {
 
-        Intent intent = new Intent(DrawerActivity.this, EditSkillActivity.class);
+        Intent intent = new Intent(SkillsDrawerActivity.this, EditSkillActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("id", skill.getMId());
         bundle.putString("name", skill.getMName());

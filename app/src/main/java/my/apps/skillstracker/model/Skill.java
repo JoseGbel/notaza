@@ -1,4 +1,4 @@
-package my.apps.skillstracker;
+package my.apps.skillstracker.model;
 
 import java.util.Date;
 import android.support.annotation.NonNull;

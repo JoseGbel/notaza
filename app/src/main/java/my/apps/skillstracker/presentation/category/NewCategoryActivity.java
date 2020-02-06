@@ -1,5 +1,6 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation.category;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -7,15 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 import my.apps.skillstracker.R;
+import my.apps.skillstracker.presentation.PictureSelectionFragment;
 import my.apps.skillstracker.unsplashapi.model.UnsplashPic;
 
-public class NewCategoryActivity extends AppCompatActivity implements PictureSelectionFragment.FragmentCallback{
+public class NewCategoryActivity extends AppCompatActivity implements PictureSelectionFragment.FragmentCallback {
 
     public static final String EXTRA_BUNDLE = "my.apps.skillstracker.BUNDLE";
     public static final String EXTRA_NAME = "my.apps.skillstracker.NAME";
@@ -50,7 +53,6 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
 
         pictureSelectionFragment
                 = new PictureSelectionFragment();
-
         continueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 // No radio buttons selected
@@ -78,7 +80,7 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
 
                             categoryName = mEditCategoryNameView.getText().toString();
                             categoryDescription = mEditCategoryDescriptionView.getText().toString();
-
+                            hideKeyboard(NewCategoryActivity.this);
                             continueButton.setVisibility(Button.GONE);
 
                             pictureSelected = true;
@@ -148,7 +150,6 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
             pictureSelected = false;
             continueButton.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
@@ -202,5 +203,16 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
             default:
                 return 0;
         }
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

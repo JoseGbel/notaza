@@ -1,4 +1,4 @@
-package my.apps.skillstracker.activities;
+package my.apps.skillstracker.presentation.skill;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -102,7 +102,7 @@ public class EditSkillActivity extends AppCompatActivity {
                         bundle.putInt(EXTRA_ID, id);
                         replyIntent.putExtra(EXTRA_BUNDLE, bundle);
                         setResult(RESULT_OK, replyIntent);
-                        DrawerActivity.isEditing = false;
+                        SkillsDrawerActivity.isEditing = false;
                     }
                     finish();
                 }

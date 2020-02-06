@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SkillsTracker</string>
+    <string name="app_name">Notaza</string>
     <string name="hint_skill">Skill...</string>
     <string name="hint_description">Description...</string>
     <string name="button_continue">Continue</string>

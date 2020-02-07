@@ -62,9 +62,7 @@ public class PictureSelectionFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_picture_selection, container, false);
-
     }
 
     @Override
@@ -73,7 +71,6 @@ public class PictureSelectionFragment extends Fragment
 
         recyclerView = getActivity().findViewById(R.id.recyclerview);
         unsplashImageView = getActivity().findViewById(R.id.unsplash_imageview);
-
     }
 
     @Override
@@ -100,7 +97,6 @@ public class PictureSelectionFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         keyword= getArguments().getString("categoryName");
-
     }
 
     private void getData(String keyword) {
@@ -134,23 +130,17 @@ public class PictureSelectionFragment extends Fragment
                                   View currentView) {
 
         if (previousView != null) {
-
             ImageView previousImageView = previousView.findViewById(R.id.unsplash_imageview);
             previousImageView.setImageAlpha(255);
         }
-        //TODO SOME ANIMATIONS
+
+        // TODO SOME ANIMATIONS
         ImageView currentImageView = currentView.findViewById(R.id.unsplash_imageview);
         currentImageView.setImageAlpha(60);
         previousView = currentView;
         Snackbar snackbar = Snackbar
                 .make(recyclerView, getString(R.string.selectThisPictureQuestion), Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(getString(R.string.YES), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragmentCallback.onDataSent(unsplashPic);
-                //                startActivityForResult(new Intent(PictureSelectionFragment.this, NewCategoryActivity.class));
-            }
-        });
+        snackbar.setAction(getString(R.string.YES), view -> fragmentCallback.onDataSent(unsplashPic));
         snackbar.setActionTextColor(Color.YELLOW);
         snackbar.show();
     }
@@ -168,7 +158,6 @@ public class PictureSelectionFragment extends Fragment
     @Override
     public void onDetach() {
         super.onDetach();
-
         Log.i (TAG, "Detaching fragment");
     }
 }

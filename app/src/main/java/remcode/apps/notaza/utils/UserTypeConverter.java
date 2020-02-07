@@ -15,6 +15,6 @@
 //
 //    @TypeConverter
 //    public static String toString(User value) {
-//        return value == null ? null : value.getUsername();
+//        return value == null ? null : value.getName();
 //    }
 //}

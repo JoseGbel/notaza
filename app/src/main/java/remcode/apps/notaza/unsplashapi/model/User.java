@@ -4,11 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class User implements Parcelable {
-    private String username;
+    private String name;
     private Links links;
 
     public User (String u, Links l){
-        username = u;
+        name = u;
         links = l;
     }
 
@@ -24,12 +24,12 @@ public class User implements Parcelable {
         }
     };
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Links getLinks() {
@@ -46,13 +46,13 @@ public class User implements Parcelable {
     }
 
     public User (Parcel in){
-        this.username = in.readString();
+        this.name = in.readString();
         this.links = in.readParcelable(Links.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
+        dest.writeString(this.name);
         dest.writeParcelable(this.links, flags);
     }
 }

@@ -5,10 +5,15 @@ import android.os.Parcelable;
 
 public class Links implements Parcelable {
 
+    private String download_location;
     private String html;
 
+    public void setHtml(String html) {
+        this.html = html;
+    }
+
     public Links(String self) {
-        this.html = self;
+        this.download_location = self;
     }
 
     public static final Creator<Links> CREATOR = new Creator<Links>() {
@@ -23,12 +28,12 @@ public class Links implements Parcelable {
         }
     };
 
-    public String getHtml() {
-        return html;
+    public String getDownload_location() {
+        return download_location;
     }
 
-    public void setHtml(String html) {
-        this.html = html;
+    public void setDownload_location(String download_location) {
+        this.download_location = download_location;
     }
 
     @Override
@@ -37,11 +42,15 @@ public class Links implements Parcelable {
     }
 
     public Links (Parcel in){
-        this.html = in.readString();
+        this.download_location = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.html);
+        dest.writeString(this.download_location);
+    }
+
+    public String getHtml() {
+        return html;
     }
 }

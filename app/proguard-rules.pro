@@ -3,7 +3,7 @@
 # proguardFiles setting in build.gradle.
 #
 # For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+#   http://developer.android.com/guide/developing/tools/proguard.download_location
 
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class nameTv to the JavaScript interface

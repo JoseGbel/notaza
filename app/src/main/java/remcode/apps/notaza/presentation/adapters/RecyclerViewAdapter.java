@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,16 +42,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+        
         UnsplashPic pic = pictureList.get(i);
+        // todo make the link work
+        Spanned artistLink = Html.fromHtml("<a href=\""
+                + pic.getUser().getLinks().getHtml()
+                + "\">"
+                + pic.getUser().getName()
+                + "</a>");
+        Spanned unsplashLink = Html.fromHtml("<a href=\"https://unsplash.com/\">"
+                + context.getString(R.string.UnsplashStringName)
+                + "</a>");
 
-        Spanned artistLink = Html.fromHtml("<a href=\"" + pic.getUser().getLinks().getHtml() + "\">" +
-                pic.getUser().getUsername() + "</a>");
-        Spanned unsplashLink = Html.fromHtml("<a href=\"https://unsplash.com/\">" +
-                context.getString(R.string.UnsplashStringName) + "</a>");
-//        viewHolder.artistName.setText(pic.getUser().getUsername());
-        viewHolder.artistName.setText(artistLink);
-        viewHolder.unsplash.setText(unsplashLink);
+        viewHolder.artistLink.setText(artistLink);
+        viewHolder.unsplashLink.setText(unsplashLink);
+        viewHolder.artistLink.setMovementMethod(LinkMovementMethod.getInstance());
+        viewHolder.unsplashLink.setMovementMethod(LinkMovementMethod.getInstance());
         Glide.with(context)
                 .load(pic.getUrls().getThumb())
                 .into(viewHolder.imageView);
@@ -67,25 +74,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         notifyDataSetChanged();
     }
 
-    public void clearList(){
-        pictureList.clear();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
-        private TextView artistName;
-        private TextView unsplash;
+        private TextView artistLink;
+        private TextView unsplashLink;
 
-        public ViewHolder (final View itemView){
+        ViewHolder(final View itemView){
             super(itemView);
 
             imageView = itemView.findViewById(R.id.unsplash_imageview);
-            artistName = itemView.findViewById(R.id.artist_name);
-            unsplash = itemView.findViewById(R.id.unsplash_name);
-
-//            artistName.setMovementMethod(LinkMovementMethod.getInstance());
-            itemView.setOnClickListener(new View.OnClickListener() {
+            artistLink = itemView.findViewById(R.id.artist_name);
+            unsplashLink = itemView.findViewById(R.id.unsplash_name);
+            imageView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     listener.onPictureSelected(pictureList.get(getAdapterPosition()), itemView);

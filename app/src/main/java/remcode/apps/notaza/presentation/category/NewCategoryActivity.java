@@ -29,10 +29,11 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
     private EditText mEditCategoryNameView, mEditCategoryDescriptionView;
     private Boolean pictureSelected = false;
     private Boolean isReadyToSave = false;
-    private String categoryName="";
     private String categoryDescription;
+    private String categoryName="";
     private Button continueButton;
     private Button saveButton;
+    private Toolbar toolbar;
     private SegmentedGroup mSegmentedGroup;
     private UnsplashPic unsplashPicReceived;
     public PictureSelectionFragment pictureSelectionFragment;
@@ -43,28 +44,28 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_category);
 
-        mEditCategoryNameView = findViewById(R.id.edit_category_name);
+        toolbar                      = findViewById(R.id.add_new_category_toolbar);
+        saveButton                   = findViewById(R.id.savebutton_newcategory);
+        continueButton               = findViewById(R.id.continue_button_new_category);
+        mSegmentedGroup              = findViewById(R.id.categoryTypeSegmentedGroup);
+        mEditCategoryNameView        = findViewById(R.id.edit_category_name);
         mEditCategoryDescriptionView = findViewById(R.id.edit_category_description);
-        mSegmentedGroup = findViewById(R.id.categoryTypeSegmentedGroup);
-        continueButton = findViewById(R.id.continue_button_new_category);
-        saveButton = findViewById(R.id.savebutton_newcategory);
-        Toolbar toolbar = findViewById(R.id.add_new_category_toolbar);
         setSupportActionBar(toolbar);
 
-        pictureSelectionFragment
-                = new PictureSelectionFragment();
-        continueButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                // No radio buttons selected
-                switch (mSegmentedGroup.getCheckedRadioButtonId()) {
-                    case -1:
-                        Toast.makeText(
-                                getApplicationContext(),
-                                getString(R.string.categoryTypeSelectionNeeded),
-                                Toast.LENGTH_SHORT)
-                                .show();
-                        break;
-                    //TODO Places todo
+        pictureSelectionFragment = new PictureSelectionFragment();
+        continueButton.setOnClickListener(view -> {
+            // No radio buttons selected
+            switch (mSegmentedGroup.getCheckedRadioButtonId()) {
+                case -1:
+                    Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.categoryTypeSelectionNeeded),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                    break;
+
+                    // TODO Places todo
+
 //                    case R.id.placesBtnSegGroup:
 //                        Toast.makeText(
 //                                getApplicationContext(),
@@ -75,28 +76,28 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
 //                        break;
 //                    case R.id.toDoBtnSegGroup:
 //                        break;
-                    default:
-                        if (!TextUtils.isEmpty(mEditCategoryNameView.getText())) {
+                default:
+                    if (!TextUtils.isEmpty(mEditCategoryNameView.getText())) {
 
-                            categoryName = mEditCategoryNameView.getText().toString();
-                            categoryDescription = mEditCategoryDescriptionView.getText().toString();
-                            hideKeyboard(NewCategoryActivity.this);
-                            continueButton.setVisibility(Button.GONE);
+                        categoryName = mEditCategoryNameView.getText().toString();
+                        categoryDescription = mEditCategoryDescriptionView.getText().toString();
+                        hideKeyboard(NewCategoryActivity.this);
+                        continueButton.setVisibility(Button.GONE);
 
-                            pictureSelected = true;
-                            Bundle bundle = new Bundle();
-                            bundle.putString("categoryName", categoryName);
-                            pictureSelectionFragment.setArguments(bundle);
+                        pictureSelected = true;
+                        Bundle bundle = new Bundle();
+                        bundle.putString("categoryName", categoryName);
+                        pictureSelectionFragment.setArguments(bundle);
 
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                            //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-                            transaction.add(R.id.fragment_container, pictureSelectionFragment)
-                                    .addToBackStack(null)
-                                    .commit();
-                        }
-                    break;
-                }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+                        transaction.add(R.id.fragment_container, pictureSelectionFragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                break;
+            }
 //            }
 //                if (mSegmentedGroup.getCheckedRadioButtonId() == -1)
 //                    Toast.makeText(
@@ -135,7 +136,6 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
 //                        }
 //                    }
 //                }
-            }
         });
     }
 
@@ -197,9 +197,9 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
                 return 2;
             //TODO Places todo
 //            case R.id.placesBtnSegGroup:
-//                return 3;
-//            case R.id.toDoBtnSegGroup:
-//                return 4;
+////                return 3;
+////            case R.id.toDoBtnSegGroup:
+////                return 4;
             default:
                 return 0;
         }

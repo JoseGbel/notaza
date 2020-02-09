@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import remcode.apps.notaza.R;
-import remcode.apps.notaza.presentation.adapters.RecyclerViewAdapter;
+import remcode.apps.notaza.presentation.adapters.PicSelectionRecyclerViewAdapter;
 import remcode.apps.notaza.unsplashapi.model.PictureResponse;
 import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
 import remcode.apps.notaza.unsplashapi.service.PictureService;
@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PictureSelectionFragment extends Fragment
-        implements RecyclerViewAdapter.RecyclerViewAdapterListener {
+        implements PicSelectionRecyclerViewAdapter.RecyclerViewAdapterListener {
 
     private static final String TAG = "unsplash";
     private final String CLIENT_ID = "7b3b9ec9a8f3057b1831c2d14d6af52e18b6bd9ba2469eec612d75d1ac007676";
@@ -39,10 +39,7 @@ public class PictureSelectionFragment extends Fragment
     private Retrofit retrofit;
 
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
-    private Button button;    //Rename this
-    private EditText editText; //TODO rename this
-    private ImageView unsplashImageView;
+    private PicSelectionRecyclerViewAdapter picSelectionRecyclerViewAdapter;
     private FragmentCallback fragmentCallback; //Data passer to the activity
     private String keyword;
     private static View previousView;
@@ -70,7 +67,6 @@ public class PictureSelectionFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = getActivity().findViewById(R.id.recyclerview);
-        unsplashImageView = getActivity().findViewById(R.id.unsplash_imageview);
     }
 
     @Override
@@ -86,8 +82,8 @@ public class PictureSelectionFragment extends Fragment
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdapter = new RecyclerViewAdapter(getContext(), this);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        picSelectionRecyclerViewAdapter = new PicSelectionRecyclerViewAdapter(getContext(), this);
+        recyclerView.setAdapter(picSelectionRecyclerViewAdapter);
 
         getData(keyword);
     }
@@ -111,7 +107,7 @@ public class PictureSelectionFragment extends Fragment
                     PictureResponse pictureResponse = response.body();
                     ArrayList<UnsplashPic> pictureList = pictureResponse.getResults();
 
-                    recyclerViewAdapter.addPictures(pictureList);
+                    picSelectionRecyclerViewAdapter.addPictures(pictureList);
 
                 }else{
                     Log.e (TAG, " onResponse " + response.errorBody());

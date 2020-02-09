@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class PicSelectionRecyclerViewAdapter extends RecyclerView.Adapter<PicSelectionRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<UnsplashPic> pictureList;
     private Context context;
     private RecyclerViewAdapterListener listener;
 
-    public RecyclerViewAdapter (Context context, RecyclerViewAdapterListener listener){
+    public PicSelectionRecyclerViewAdapter(Context context, RecyclerViewAdapterListener listener){
         pictureList = new ArrayList<>();
         this.context = context;
         this.listener = listener;
@@ -86,12 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imageView = itemView.findViewById(R.id.unsplash_imageview);
             artistLink = itemView.findViewById(R.id.artist_name);
             unsplashLink = itemView.findViewById(R.id.unsplash_name);
-            imageView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    listener.onPictureSelected(pictureList.get(getAdapterPosition()), itemView);
-                }
-            });
+            imageView.setOnClickListener(v -> listener.onPictureSelected(pictureList.get(getAdapterPosition()), itemView));
         }
 
     }

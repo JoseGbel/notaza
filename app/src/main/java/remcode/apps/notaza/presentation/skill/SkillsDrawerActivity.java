@@ -30,7 +30,7 @@ import java.util.List;
 import remcode.apps.notaza.model.Category;
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.model.Skill;
-import remcode.apps.notaza.presentation.MainActivity;
+import remcode.apps.notaza.presentation.category.CategoryActivity;
 import remcode.apps.notaza.presentation.adapters.RecyclerItemTouchHelper;
 import remcode.apps.notaza.presentation.adapters.SkillListAdapter;
 import remcode.apps.notaza.presentation.category.EditCategoryActivity;
@@ -158,7 +158,7 @@ public class SkillsDrawerActivity extends AppCompatActivity
 
         if (requestCode == EDIT_CATEGORY_ACTIVITY_REQUEST_CODE){
             if (resultCode == RESULT_OK){
-                Intent backToMainScreen = new Intent(this, MainActivity.class);
+                Intent backToMainScreen = new Intent(this, CategoryActivity.class);
                 Bundle bundleReceived = data.getBundleExtra(EditCategoryActivity.EXTRA_BUNDLE);
                 backToMainScreen.putExtra(EXTRA_BUNDLE_EDITED_CATEGORY, bundleReceived);
                 startActivity(backToMainScreen);

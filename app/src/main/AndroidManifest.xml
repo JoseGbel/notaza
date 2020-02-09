@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name="remcode.apps.notaza.presentation.MainActivity"
+            android:name="remcode.apps.notaza.presentation.category.CategoryActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
             <meta-data

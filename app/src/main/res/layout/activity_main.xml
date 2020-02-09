@@ -6,7 +6,7 @@
     android:id="@+id/coordinatorlayout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    tools:context=".presentation.category.CategoryActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarlayout_main"

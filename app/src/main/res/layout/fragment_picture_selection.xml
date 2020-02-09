@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,20 +7,71 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".presentation.category.NewCategoryActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginBottom="@dimen/margin_fab"
-        android:layout_gravity="center"
-        android:text="@string/select_a_picture"/>
-
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerview">
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        android:layout_height="294dp"
+        android:orientation="vertical"
+        android:id="@+id/linear_layout_recycler_view"
+        tools:context=".presentation.category.NewCategoryActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="@dimen/margin_fab"
+            android:layout_gravity="center"
+            android:text="@string/select_a_picture"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerview">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_layout_recycler_view"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/big_padding">
+
+        <LinearLayout
+            android:id="@+id/ll_try_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/keep_seaarching"
+                android:textSize="@dimen/SmallTextSize"></TextView>
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/insert_a_keyword"
+                android:textSize="@dimen/SmallTextSize"></android.support.design.widget.TextInputEditText>
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity=""
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="16dp"
+            android:layout_toRightOf="@+id/ll_try_again"
+            android:text="@string/try_again"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.v7.widget.AppCompatButton>
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

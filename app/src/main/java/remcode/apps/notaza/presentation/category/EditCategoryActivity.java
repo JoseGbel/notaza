@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 import remcode.apps.notaza.R;
-import remcode.apps.notaza.presentation.MainActivity;
 
 public class EditCategoryActivity extends AppCompatActivity {
 
@@ -107,7 +106,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                             bundle.putInt(EXTRA_ID, id);
                             replyIntent.putExtra(EXTRA_BUNDLE, bundle);
                             setResult(RESULT_OK, replyIntent);
-                            MainActivity.editingCategory = true;
+                            CategoryActivity.editingCategory = true;
                         }
                         finish();
                     //}

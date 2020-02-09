@@ -50,6 +50,9 @@
     <string name="select_a_picture">Select a picture</string>
     <string name="not_happy_search_for_more">Not happy?...Search for more</string>
     <string name="search">Search</string>
+    <string name="keep_seaarching">Keep searching?</string>
+    <string name="insert_a_keyword">Insert a keyword...</string>
+    <string name="try_again">Try Again</string>
     <string-array name="more_items_drawer_activity">
         <item>Edit Category</item>
         <item>Delete Category</item>

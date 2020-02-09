@@ -1,4 +1,4 @@
-package remcode.apps.notaza.presentation;
+package remcode.apps.notaza.presentation.category;
 
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
@@ -32,8 +32,6 @@ import remcode.apps.notaza.model.Category;
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.presentation.adapters.CategoryListAdapter;
 import remcode.apps.notaza.presentation.adapters.RecyclerItemTouchHelper;
-import remcode.apps.notaza.presentation.category.EditCategoryActivity;
-import remcode.apps.notaza.presentation.category.NewCategoryActivity;
 import remcode.apps.notaza.presentation.skill.SkillsDrawerActivity;
 import remcode.apps.notaza.repositories.CategoryRepository;
 import remcode.apps.notaza.repositories.CategoryViewModel;
@@ -41,8 +39,7 @@ import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
 import remcode.apps.notaza.utils.AppRater;
 
 //TODO clean up the code to make it more readable
-//TODO create an offline mode.
-public class MainActivity extends AppCompatActivity
+public class CategoryActivity extends AppCompatActivity
         implements CategoryListAdapter.CategoryListAdapterListener,
         RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
@@ -172,7 +169,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onCategorySelected(Category category) {
-        Intent intent = new Intent(MainActivity.this, SkillsDrawerActivity.class);
+        Intent intent = new Intent(CategoryActivity.this, SkillsDrawerActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("Category", category.stringify());
         intent.putExtras(bundle);
@@ -276,58 +273,27 @@ public class MainActivity extends AppCompatActivity
             // remove the category from the database
             mCategoryViewModel.delete(deletedCategory);
 
-            //create backup table in case of restoring
-//            mSkillViewModel.createBackupTable(deletedCategory.getMName());
-
-            // drop table from database
-//            query = new SimpleSQLiteQuery(String.format
-//                    ("DROP %s", deletedCategory.getMName()));
-//            mSkillViewModel.rawQuery(query);
 //            // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
                     .make(coordinatorLayout, name + getString(R.string.removedFromList), Snackbar.LENGTH_LONG);
-            snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // undo is selected, restore the deleted skill
-                    mRecyclerViewAdapter.restoreCategories(deletedCategory, deletedIndex);
-                    // Insert the deletedSkill in the database again
-                    mCategoryViewModel.insert(deletedCategory);
-
-//                    SimpleSQLiteQuery query = new SimpleSQLiteQuery(String.format
-//                            ("CREATE TABLE %s AS" +
-//                                    "SELECT *" +
-//                                    "FROM backup", deletedCategory.getMName()));
-//                    mSkillViewModel.rawQuery(query);
-                }
+            snackbar.setAction(getString(R.string.undo), view -> {
+                // undo is selected, restore the deleted skill
+                mRecyclerViewAdapter.restoreCategories(deletedCategory, deletedIndex);
+                // Insert the deletedSkill in the database again
+                mCategoryViewModel.insert(deletedCategory);
             });
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
-
-            //delete the backup table after a few seconds
-//            new java.util.Timer().schedule(
-//                    new java.util.TimerTask() {
-//                        @Override
-//                        public void run() {
-//                            SimpleSQLiteQuery query = new SimpleSQLiteQuery("DROP backup");
-//                            mSkillViewModel.rawQuery(query);
-//                        }
-//                    },
-//                    snackbar.getDuration()
-//            );
         }
     }
 
     private void setFAB() {
         FloatingActionButton mFab = findViewById(R.id.fab_main);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent =
-                        new Intent (MainActivity.this, NewCategoryActivity.class);
+        mFab.setOnClickListener(view -> {
+            Intent intent =
+                    new Intent (CategoryActivity.this, NewCategoryActivity.class);
 
-                startActivityForResult(intent, NEW_SKILL_ACTIVITY_REQUEST_CODE);
-            }
+            startActivityForResult(intent, NEW_SKILL_ACTIVITY_REQUEST_CODE);
         });
     }
 

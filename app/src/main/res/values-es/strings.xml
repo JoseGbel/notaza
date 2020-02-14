@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">Notaza</string>
-    <string name="hint_skill">Habilidad…</string>
+    <string name="hint_entry">Entrada…</string>
     <string name="hint_description">Descripción…</string>
     <string name="button_continue">Continuar</string>
-    <string name="empty_skill_name">La habilidad no se pudo guardar porque estaba vacía.</string>
+    <string name="empty_entry_name">La entrada no se pudo guardar porque estaba vacía.</string>
     <string name="action_search">Buscar</string>
     <string name="action_more">Menu</string>
     <string name="search_hint">Introduzca una palabra…</string>
-    <string name="new_skill_title">Habilidad nueva</string>
+    <string name="new_entry_title">Nueva entrada</string>
     <string name="today">HOY</string>
-    <string name="skillnotavailable">Habilidad no disponible</string>
+    <string name="entrynotavailable">Entrada no disponible</string>
     <string name="hint_category">Categoría…</string>
     <string name="errorselectingcategory">Error seleccionando categoría</string>
     <string name="new_category_title">Nueva Categoría</string>
@@ -29,7 +29,9 @@
     <string name="places">Lugares</string>
     <string name="skills">Habilidades</string>
     <string name="notes">Notas</string>
-    <string name="categoryTypeSelectionNeeded">Seleccione un tipo de lista para esta categoría</string>
+    <string name="categoryTypeSelectionNeeded">
+        Seleccione un tipo de lista para esta categoría
+    </string>
     <string name="edit">Editar</string>
     <string name="category">categoría</string>
     <string name="save">Guardar</string>
@@ -41,14 +43,21 @@
     <string name="remindMeLater">Recuérdamelo mas tarde</string>
     <string name="Rate">Valorar\u0020</string>
     <string name="enjoyUsing">Si disfruta usando </string>
-    <string name="pleaseRate">, por favor tómate un momento para valorarlo. Gracias por tu apoyo!</string>
-    <string name="empty_category_name">La categoría no fue guardada porque el nombre estaba vacío</string>
+    <string name="pleaseRate">
+        , por favor tómate un momento para valorarlo.Gracias por tu apoyo!
+    </string>
+    <string name="empty_category_name">
+        La categoría no fue guardada porque el nombre estaba vacío
+    </string>
     <string name="removedFromList">\u0020se ha eliminado de la lista!</string>
     <string name="undo">DESHACER</string>
     <string name="selectThisPictureQuestion">Quieres seleccionar esta imagen?</string>
     <string name="YES">SI</string>
-    <string name="select_a_picture">Selecciona una imagen</string>
+    <string name="select_a_picture">Selecciona una imagen de fondo</string>
     <string name="not_happy_search_for_more">Seguir buscando?</string>
+    <string name="keep_seaarching">Seguir buscando?</string>
+    <string name="insert_a_keyword">Inserta una palabra clave…</string>
+    <string name="try_again">Reintentar</string>
     <string name="search">Buscar</string>
     <string-array name="more_items_drawer_activity">
         <item>Editar Categoría</item>

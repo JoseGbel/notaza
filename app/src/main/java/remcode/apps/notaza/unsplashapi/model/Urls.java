@@ -5,7 +5,23 @@ import android.os.Parcelable;
 
 public class Urls implements Parcelable{
 
+    private String thumb;
+
+    private Urls (Parcel in){
+
+        this.thumb = in.readString();
+    }
+
     public Urls(String thumb) {
+
+        this.thumb = thumb;
+    }
+
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
         this.thumb = thumb;
     }
 
@@ -21,23 +37,9 @@ public class Urls implements Parcelable{
         }
     };
 
-    public String getThumb() {
-        return thumb;
-    }
-
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
-    }
-
-    private String thumb;
-
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    private Urls (Parcel in){
-        this.thumb = in.readString();
     }
 
     @Override

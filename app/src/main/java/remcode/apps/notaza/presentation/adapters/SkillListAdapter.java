@@ -101,7 +101,7 @@ public class SkillListAdapter
                 viewHolder.dateTv.setText(simpleDateFormat.format(currentSkill.getMDate()));
 
         }else
-            viewHolder.nameTv.setText(R.string.skillnotavailable);
+            viewHolder.nameTv.setText(R.string.entrynotavailable);
     }
 
     private void setExperienceTextView(@NonNull SkillViewHolder viewHolder, Skill currentSkill) {

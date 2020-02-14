@@ -4,9 +4,9 @@ import android.content.Context;
 
 public interface Updatable {
 
-    void checkUpdateAvailability(Context context, int updateType);
-    void checkUpdateInProgress(Context context, int updateType);
+    void checkUpdateAvailability(int updateType);
+    void checkUpdateIsNotStalled(int updateType);
+    void checkUpdateInProgress(int updateType);
 
     void checkUpdateResult(int requestCode, int resultCode);
-    void checkUpdateIsNotStalled(Context context);
 }

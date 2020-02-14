@@ -10,4 +10,5 @@
     <dimen name="margin_fab">16dp</dimen>
     <dimen name="marginHorizontalForNewSkillForm">5dp</dimen>
     <dimen name="SmallTextSize">16sp</dimen>
+    <dimen name="marginBtn">16dp</dimen>
 </resources>

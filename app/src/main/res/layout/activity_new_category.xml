@@ -82,30 +82,25 @@
         android:hint="@string/hint_description"
         android:inputType="textAutoComplete"
         android:padding="@dimen/small_padding"
-        android:layout_marginBottom="@dimen/big_padding"
         android:layout_marginTop="@dimen/big_padding"
         android:textSize="18sp" />
 
 
     <Button
         android:id="@+id/continue_button_new_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        style="@style/ButtonStyle"
+        android:layout_marginTop="@dimen/marginBtn"
         android:text="@string/continue1"
-        android:textColor="@color/buttonLabel"
         android:layout_gravity="center"
         android:visibility="visible" />
 
     <Button
         android:visibility="gone"
         android:id="@+id/savebutton_newcategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:layout_marginTop="@dimen/marginBtn"
         android:text="@string/save"
-        android:layout_gravity="center"
-        android:textColor="@color/buttonLabel" />
+        style="@style/ButtonStyle"
+        android:layout_gravity="center" />
 
     <FrameLayout
         android:id="@+id/fragment_container"

@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Notaza</string>
-    <string name="hint_skill">Skill...</string>
-    <string name="hint_description">Description...</string>
+    <string name="hint_entry">Entry…</string>
+    <string name="hint_description">Description…</string>
     <string name="button_continue">Continue</string>
-    <string name="empty_skill_name">Skill not saved because it is empty.</string>
+    <string name="empty_entry_name">Entry not saved because it is empty.</string>
     <string name="action_search">Search</string>
     <string name="action_more">Menu</string>
     <string name="search_hint">Type to search…</string>
-    <string name="new_skill_title">New skill</string>
+    <string name="new_entry_title">New entry</string>
     <string name="today">TODAY</string>
-    <string name="skillnotavailable">Skill not available</string>
-    <string name="hint_category">Category...</string>
+    <string name="entrynotavailable">Entry not available</string>
+    <string name="hint_category">Category…</string>
     <string name="errorselectingcategory">Error selecting category</string>
     <string name="new_category_title">New Category</string>
     <string name="novice">Novice</string>
@@ -47,11 +47,11 @@
     <string name="undo">UNDO</string>
     <string name="selectThisPictureQuestion">Select this picture?</string>
     <string name="YES">YES</string>
-    <string name="select_a_picture">Select a picture</string>
-    <string name="not_happy_search_for_more">Not happy?...Search for more</string>
+    <string name="select_a_picture">Select a background picture</string>
+    <string name="not_happy_search_for_more">Not happy?…Search for more</string>
     <string name="search">Search</string>
     <string name="keep_seaarching">Keep searching?</string>
-    <string name="insert_a_keyword">Insert a keyword...</string>
+    <string name="insert_a_keyword">Insert a keyword…</string>
     <string name="try_again">Try Again</string>
     <string-array name="more_items_drawer_activity">
         <item>Edit Category</item>

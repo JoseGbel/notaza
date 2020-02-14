@@ -74,6 +74,11 @@ public class PicSelectionRecyclerViewAdapter extends RecyclerView.Adapter<PicSel
         notifyDataSetChanged();
     }
 
+    public void deletePictures() {
+        this.pictureList.clear();
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;

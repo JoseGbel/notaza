@@ -81,26 +81,22 @@ public class CategoryActivity extends AppCompatActivity
 
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);
 
-        controller = new AppController();
+        controller = new AppController(this);
 
         // TODO do it in background
-        controller.updateManager.checkUpdateAvailability(this, AppUpdateType.FLEXIBLE);
-        controller.updateManager.checkUpdateAvailability(this, AppUpdateType.IMMEDIATE);
+        controller.updateManager.checkUpdateAvailability(AppUpdateType.FLEXIBLE);
+        controller.updateManager.checkUpdateAvailability(AppUpdateType.IMMEDIATE);
 
         mCategoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
-        mCategoryViewModel.getAllCategories().observe(this, new Observer<List<Category>>() {
-            @Override
-            public void onChanged(@Nullable final List<Category> categories) {
-                // Update the cached copy of the skills in the adapter.
-                mRecyclerViewAdapter.setCategories(categories);
-            }
+        mCategoryViewModel.getAllCategories().observe(this, categories -> {
+            // Update the cached copy of the skills in the adapter.
+            mRecyclerViewAdapter.setCategories(categories);
         });
 
         setFAB();
 
         AppRater.app_launched(this);
     }
-
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -151,7 +147,6 @@ public class CategoryActivity extends AppCompatActivity
                     break;
             }
         }
-
         // Result of updating the app or not
         controller.updateManager.checkUpdateResult(requestCode, resultCode);
     }
@@ -204,7 +199,8 @@ public class CategoryActivity extends AppCompatActivity
         super.onResume();
 
         // Checking apps update is not stalled
-        controller.updateManager.checkUpdateIsNotStalled(this);
+        controller.updateManager.checkUpdateIsNotStalled(AppUpdateType.FLEXIBLE);
+        controller.updateManager.checkUpdateIsNotStalled(AppUpdateType.IMMEDIATE);
     }
 
     @Override

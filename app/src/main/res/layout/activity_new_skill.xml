@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_skill"
+        android:hint="@string/hint_entry"
         android:inputType="textAutoComplete"
         android:padding="@dimen/small_padding"
         android:layout_marginBottom="@dimen/big_padding"
@@ -101,12 +101,9 @@
 
     <Button
         android:id="@+id/button_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/marginHorizontalForNewSkillForm"
         android:layout_marginEnd="@dimen/marginHorizontalForNewSkillForm"
-        android:background="@color/colorAccent"
         android:text="@string/button_continue"
-        android:textColor="@color/buttonLabel" />
+        style="@style/ButtonStyle" />
 </LinearLayout>

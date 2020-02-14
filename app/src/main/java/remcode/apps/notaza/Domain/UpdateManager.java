@@ -1,35 +1,38 @@
 package remcode.apps.notaza.Domain;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.IntentSender;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.ActivityResult;
-import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 
+import java.time.Duration;
+
 import static android.app.Activity.RESULT_OK;
-import static com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE;
 
 
 public class UpdateManager implements Updatable {
 
     public static final int MY_REQUEST_CODE = 100;
 
-    public UpdateManager(){
+    AppUpdateManager appUpdateManager;
+    Context context;
 
+    public UpdateManager(Context context){
+        appUpdateManager = AppUpdateManagerFactory.create(context);
+        this.context = context;
     }
 
     @Override
-    public void checkUpdateAvailability(Context context, int updateType) {
-
-        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
-
+    public void checkUpdateAvailability(int updateType) {
         // Returns an intent object that you use to check for an update.
         Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
@@ -57,7 +60,7 @@ public class UpdateManager implements Updatable {
     }
 
     @Override
-    public void checkUpdateInProgress(Context context, int updateTipe) {
+    public void checkUpdateInProgress(int updateType) {
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
         appUpdateManager
                 .getAppUpdateInfo()
@@ -69,8 +72,31 @@ public class UpdateManager implements Updatable {
                                 try {
                                     appUpdateManager.startUpdateFlowForResult(
                                             appUpdateInfo,
-                                            updateTipe,
+                                            updateType,
                                             (Activity)context,
+                                            MY_REQUEST_CODE);
+                                } catch (IntentSender.SendIntentException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+    }
+
+    @Override
+    public void checkUpdateIsNotStalled(int updateType) {
+        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
+        appUpdateManager
+                .getAppUpdateInfo()
+                .addOnSuccessListener(
+                        appUpdateInfo -> {
+                            if (appUpdateInfo.updateAvailability()
+                                    == UpdateAvailability.UPDATE_AVAILABLE) {
+                                // If an in-app update is already running, resume the update.
+                                try {
+                                    appUpdateManager.startUpdateFlowForResult(
+                                            appUpdateInfo,
+                                            updateType,
+                                            (Activity) context,
                                             MY_REQUEST_CODE);
                                 } catch (IntentSender.SendIntentException e) {
                                     e.printStackTrace();
@@ -82,34 +108,16 @@ public class UpdateManager implements Updatable {
     @Override
     public void checkUpdateResult(int requestCode, int resultCode) {
         if (requestCode == MY_REQUEST_CODE) {
-            if (resultCode != RESULT_OK) {
-                Log.e("UPDATE ERROR", "Update flow failed! Result code: " + resultCode);
-                // If the update is cancelled or fails,
-                // you can request to start the update again.
+            switch (resultCode) {
+                case Activity.RESULT_OK: { }
+                    break;
+                case Activity.RESULT_CANCELED : { }
+                    break;
+                case ActivityResult.RESULT_IN_APP_UPDATE_FAILED: {
+                    Log.e("UPDATE ERROR", "Update flow failed! Result code: " + resultCode);
+                }
+                    break;
             }
         }
-    }
-
-    @Override
-    public void checkUpdateIsNotStalled(Context context) {
-        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
-        appUpdateManager
-                .getAppUpdateInfo()
-                .addOnSuccessListener(
-                        appUpdateInfo -> {
-                            if (appUpdateInfo.updateAvailability()
-                                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                                // If an in-app update is already running, resume the update.
-                                try {
-                                    appUpdateManager.startUpdateFlowForResult(
-                                            appUpdateInfo,
-                                            IMMEDIATE,
-                                            (Activity) context,
-                                            MY_REQUEST_CODE);
-                                } catch (IntentSender.SendIntentException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
     }
 }

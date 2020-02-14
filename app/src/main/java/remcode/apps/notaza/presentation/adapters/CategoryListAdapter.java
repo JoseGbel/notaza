@@ -95,7 +95,7 @@ public class CategoryListAdapter
                 }
             }
         }else
-            viewHolder.nameTv.setText(R.string.skillnotavailable);
+            viewHolder.nameTv.setText(R.string.entrynotavailable);
     }
 
     public void removeCategory(int position) {

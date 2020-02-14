@@ -1,5 +1,6 @@
 package remcode.apps.notaza.presentation;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,17 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import java.util.ArrayList;
-
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.presentation.adapters.PicSelectionRecyclerViewAdapter;
-import remcode.apps.notaza.unsplashapi.model.PictureResponse;
+import remcode.apps.notaza.unsplashapi.model.UnsplashResponse;
 import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
-import remcode.apps.notaza.unsplashapi.service.PictureService;
+import remcode.apps.notaza.unsplashapi.service.UnsplashService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +41,8 @@ public class PictureSelectionFragment extends Fragment
     private RecyclerView recyclerView;
     private PicSelectionRecyclerViewAdapter picSelectionRecyclerViewAdapter;
     private FragmentCallback fragmentCallback; //Data passer to the activity
+    private Button tryAgainBtn;
+    private EditText tryAgainEditText;
     private String keyword;
     private static View previousView;
 
@@ -58,7 +60,8 @@ public class PictureSelectionFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_picture_selection, container, false);
     }
 
@@ -67,6 +70,8 @@ public class PictureSelectionFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = getActivity().findViewById(R.id.recyclerview);
+        tryAgainBtn = getActivity().findViewById(R.id.tryAgainBtn);
+        tryAgainEditText = getActivity().findViewById(R.id.tryAgainEditText);
     }
 
     @Override
@@ -82,10 +87,17 @@ public class PictureSelectionFragment extends Fragment
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(layoutManager);
 
-        picSelectionRecyclerViewAdapter = new PicSelectionRecyclerViewAdapter(getContext(), this);
+        picSelectionRecyclerViewAdapter = new PicSelectionRecyclerViewAdapter(getContext(),
+                this);
         recyclerView.setAdapter(picSelectionRecyclerViewAdapter);
 
         getData(keyword);
+
+        tryAgainBtn.setOnClickListener(view -> {
+            clearData(); // Clear previous pictures from list
+            getData(String.valueOf(tryAgainEditText.getText())); // Request pics from new keyword
+            hideKeyboard(getActivity());
+        });
     }
 
     @Override
@@ -95,16 +107,20 @@ public class PictureSelectionFragment extends Fragment
         keyword= getArguments().getString("categoryName");
     }
 
-    private void getData(String keyword) {
-        PictureService service = retrofit.create(PictureService.class);
-        Call<PictureResponse> pictureResponseCall = service.getPictureList(keyword, CLIENT_ID);
+    void clearData(){
+        picSelectionRecyclerViewAdapter.deletePictures();
+    }
 
-        pictureResponseCall.enqueue(new Callback<PictureResponse>() {
+    private void getData(String keyword) {
+        UnsplashService service = retrofit.create(UnsplashService.class);
+        Call<UnsplashResponse> pictureResponseCall = service.getPictureList(keyword, CLIENT_ID);
+
+        pictureResponseCall.enqueue(new Callback<UnsplashResponse>() {
             @Override
-            public void onResponse(Call<PictureResponse> call, Response<PictureResponse> response) {
+            public void onResponse(Call<UnsplashResponse> call, Response<UnsplashResponse> response) {
                 if (response.isSuccessful()){
 
-                    PictureResponse pictureResponse = response.body();
+                    UnsplashResponse pictureResponse = response.body();
                     ArrayList<UnsplashPic> pictureList = pictureResponse.getResults();
 
                     picSelectionRecyclerViewAdapter.addPictures(pictureList);
@@ -115,7 +131,7 @@ public class PictureSelectionFragment extends Fragment
             }
 
             @Override
-            public void onFailure(Call<PictureResponse> call, Throwable t) {
+            public void onFailure(Call<UnsplashResponse> call, Throwable t) {
                 Log.e (TAG, " onFailure " + t.getMessage());
             }
         });
@@ -155,5 +171,17 @@ public class PictureSelectionFragment extends Fragment
     public void onDetach() {
         super.onDetach();
         Log.i (TAG, "Detaching fragment");
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
+        // Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        // If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

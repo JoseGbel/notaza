@@ -9,11 +9,11 @@ import android.net.Uri;
 import remcode.apps.notaza.R;
 
 public class AppRater {
-    private final static String APP_TITLE = "Skills Tracker";// App Name
-    private final static String APP_PNAME = "my.apps.skillstracker";// Package Name
+    private final static String APP_TITLE = "Notaza";
+    private final static String APP_PNAME = "remcode.apps.notaza";
 
-    private final static int DAYS_UNTIL_PROMPT = 3;//Min number of days
-    private final static int LAUNCHES_UNTIL_PROMPT = 3;//Min number of launches
+    private final static int DAYS_UNTIL_PROMPT = 3;
+    private final static int LAUNCHES_UNTIL_PROMPT = 3;
 
     public static void app_launched(Context mContext) {
         SharedPreferences prefs = mContext.getSharedPreferences("apprater", 0);
@@ -43,33 +43,29 @@ public class AppRater {
         editor.apply();
     }
 
-    private static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
+    private static void showRateDialog(final Context mContext,
+                                       final SharedPreferences.Editor editor) {
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 
         dialog.setTitle(mContext.getString(R.string.Rate) + APP_TITLE);
-        dialog.setMessage(mContext.getString(R.string.enjoyUsing) + APP_TITLE + mContext.getString(R.string.pleaseRate));
+        dialog.setMessage(mContext.getString(R.string.enjoyUsing)
+                + APP_TITLE + mContext.getString(R.string.pleaseRate));
 
-        dialog.setPositiveButton(mContext.getString(R.string.Rate), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
-            }
+        dialog.setPositiveButton(mContext.getString(R.string.Rate), (dialogInterface, i) -> {
+            editor.putBoolean("dontshowagain", true);
+            editor.commit();
+            mContext.startActivity(
+                    new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
         });
 
-        dialog.setNeutralButton(mContext.getString(R.string.remindMeLater), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
+        dialog.setNeutralButton(mContext.getString(R.string.remindMeLater), (dialogInterface, i) -> {
         });
 
-        dialog.setNegativeButton(mContext.getString(R.string.noThanks), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (editor != null) {
-                    editor.putBoolean("dontshowagain", true);
-                    editor.commit();
-                }
+        dialog.setNegativeButton(mContext.getString(R.string.noThanks), (dialogInterface, i) -> {
+            if (editor != null) {
+                editor.putBoolean("dontshowagain", true);
+                editor.commit();
             }
         });
 

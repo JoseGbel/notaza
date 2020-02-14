@@ -25,6 +25,7 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
     public static final String EXTRA_DESCRIPTION = "my.apps.skillstracker.DESCRIPTION";
     public static final String EXTRA_UNSPLASHPICTURE = "my.apps.skillstracker.UNSPLASHPICTURE";
     public static final String EXTRA_TYPE = "my.apps.skillstracker.CATEGORYTYPE";
+    private final String CLIENT_ID = "7b3b9ec9a8f3057b1831c2d14d6af52e18b6bd9ba2469eec612d75d1ac007676";
 
     private EditText mEditCategoryNameView, mEditCategoryDescriptionView;
     private Boolean pictureSelected = false;
@@ -37,7 +38,7 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
     private SegmentedGroup mSegmentedGroup;
     private UnsplashPic unsplashPicReceived;
     public PictureSelectionFragment pictureSelectionFragment;
-    private IPicDownloader picDownloader;
+    private PicDownloaderImp picDownloader;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
         mEditCategoryNameView        = findViewById(R.id.edit_category_name);
         mEditCategoryDescriptionView = findViewById(R.id.edit_category_description);
         setSupportActionBar(toolbar);
+
+        picDownloader = new PicDownloaderImp();
 
         pictureSelectionFragment = new PictureSelectionFragment();
         continueButton.setOnClickListener(view -> {
@@ -131,9 +134,12 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
                 replyIntent.putExtra(EXTRA_BUNDLE, bundle);
                 setResult(RESULT_OK, replyIntent);
 
+                String downloadLink = unsplashPic.getLinks()
+                        .getDownload_location() + "?client_id=" + CLIENT_ID;
+                picDownloader.requestDownloadLink(downloadLink);
                 // TODO continue with downloader class!!!
-                // download the picture
-                //picDownloader.download(unsplashPic);
+                // requestDownload the picture
+                //picDownloader.requestDownload(unsplashPic);
             }
             finish();
         });

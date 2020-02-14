@@ -54,7 +54,7 @@
 
         <activity
             android:name="remcode.apps.notaza.presentation.skill.NewSkillActivity"
-            android:label="@string/new_skill_title"
+            android:label="@string/new_entry_title"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 

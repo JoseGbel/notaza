@@ -1,29 +1,28 @@
-package remcode.apps.notaza.presentation;
+package remcode.apps.notaza.presentation.category;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.presentation.adapters.PicSelectionRecyclerViewAdapter;
-import remcode.apps.notaza.unsplashapi.model.UnsplashResponse;
+import remcode.apps.notaza.presentation.skill.SkillsDrawerActivity;
 import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
+import remcode.apps.notaza.unsplashapi.model.UnsplashResponse;
 import remcode.apps.notaza.unsplashapi.service.UnsplashService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,48 +30,42 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PictureSelectionFragment extends Fragment
-        implements PicSelectionRecyclerViewAdapter.RecyclerViewAdapterListener {
+public class ChangePictureActivity extends AppCompatActivity implements
+        PicSelectionRecyclerViewAdapter.RecyclerViewAdapterListener {
 
-    public static final String EXTRA_PIC_URL = "165156";
+    public static final String EXTRA_PIC_STRING = "165156";
+    public static final String EXTRA_ID = "1251151";
     private static final String TAG = "unsplash";
+    public static final int UPDATE_PICTURE = 515;
     private final String CLIENT_ID = "7b3b9ec9a8f3057b1831c2d14d6af52e18b6bd9ba2469eec612d75d1ac007676";
     private final String urlBase = "https://api.unsplash.com/";
     private Retrofit retrofit;
 
     private RecyclerView recyclerView;
     private PicSelectionRecyclerViewAdapter picSelectionRecyclerViewAdapter;
-    private FragmentCallback fragmentCallback; //Data passer to the activity
-    private Button tryAgainBtn;
+    private Button searchBtn;
     private EditText tryAgainEditText;
-    private String keyword;
     private static View previousView;
 
-    public PictureSelectionFragment(){
-
-    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        fragmentCallback = (FragmentCallback) context;
-        previousView = null;
-    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_picture_selection, container, false);
-    }
+        setContentView(R.layout.change_picture);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        tryAgainEditText = findViewById(R.id.tryAgainEditText);
+        recyclerView = findViewById(R.id.recyclerview);
+        searchBtn = findViewById(R.id.searchBtnChangePicture);
+        ImageView currentImageView = findViewById(R.id.current_picture);
 
-        recyclerView = getActivity().findViewById(R.id.recyclerview);
-        tryAgainBtn = getActivity().findViewById(R.id.searchBtnChangePicture);
-        tryAgainEditText = getActivity().findViewById(R.id.tryAgainEditText);
+        String myStringExtra = getIntent().getStringExtra("pictureToChange");
+        if (myStringExtra != null && getResources().getConfiguration()
+                .orientation == Configuration.ORIENTATION_PORTRAIT) {
+            UnsplashPic currentPicture = UnsplashPic.createFromString(myStringExtra);
+            Glide.with(this)
+                    .load(currentPicture.getUrls().getRegular())
+                    .into(currentImageView);
+        }
     }
 
     @Override
@@ -85,31 +78,21 @@ public class PictureSelectionFragment extends Fragment
                 .build();
         recyclerView.setHasFixedSize(true);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
 
-        // change number of columns in the layout if in landscape mode
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
             layoutManager.setSpanCount(3);
 
-        picSelectionRecyclerViewAdapter = new PicSelectionRecyclerViewAdapter(getContext(),
+        picSelectionRecyclerViewAdapter = new PicSelectionRecyclerViewAdapter(this,
                 this);
         recyclerView.setAdapter(picSelectionRecyclerViewAdapter);
 
-        getData(keyword);
-
-        tryAgainBtn.setOnClickListener(view -> {
+        searchBtn.setOnClickListener(view -> {
             clearData(); // Clear previous pictures from list
             getData(String.valueOf(tryAgainEditText.getText())); // Request pics from new keyword
-            hideKeyboard(getActivity());
+            hideKeyboard(this);
         });
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        keyword= getArguments().getString("categoryName");
     }
 
     void clearData(){
@@ -130,6 +113,9 @@ public class PictureSelectionFragment extends Fragment
 
                     picSelectionRecyclerViewAdapter.addPictures(pictureList);
 
+                    TextView textViewFrame = findViewById(R.id.backgroundPictureTextViewFrame);
+                    if (textViewFrame != null)
+                        textViewFrame.setText(getString(R.string.select_a_picture));
                 }else{
                     Log.e (TAG, " onResponse " + response.errorBody());
                 }
@@ -145,37 +131,29 @@ public class PictureSelectionFragment extends Fragment
     @Override
     public void onPictureSelected(final UnsplashPic unsplashPic,
                                   View currentView) {
-
         if (previousView != null) {
             ImageView previousImageView = previousView.findViewById(R.id.unsplash_imageview);
             previousImageView.setImageAlpha(255);
         }
 
-        // TODO SOME ANIMATIONS
         ImageView currentImageView = currentView.findViewById(R.id.unsplash_imageview);
         currentImageView.setImageAlpha(60);
         previousView = currentView;
         Snackbar snackbar = Snackbar
                 .make(recyclerView, getString(R.string.selectThisPictureQuestion), Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(getString(R.string.YES), view -> fragmentCallback.onDataSent(unsplashPic));
+        snackbar.setAction(getString(R.string.YES), view -> {
+            Intent backToCategoryActivity = new Intent(this, SkillsDrawerActivity.class);
+            backToCategoryActivity.putExtra("NewPictureObject", unsplashPic.stringify());
+            setResult(RESULT_OK, backToCategoryActivity);
+            finish();
+        });
         snackbar.setActionTextColor(Color.YELLOW);
         snackbar.show();
-    }
-
-    public interface FragmentCallback {
-        void onDataSent (UnsplashPic unsplashPic);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i (TAG, "Destroying fragment");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.i (TAG, "Detaching fragment");
     }
 
     public static void hideKeyboard(Activity activity) {

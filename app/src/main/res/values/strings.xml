@@ -22,7 +22,7 @@
     <string name="selectExperiencePlease">Select level of expertise</string>
     <string name="category_s_image">Category\'s image</string>
     <string name="UnsplashStringName">Unsplash</string>
-    <string name="edit_category">Edit Category</string>
+    <string name="edit_information">Edit information</string>
     <string name="delete_category">Delete Category</string>
     <string name="category_menu">Category Menu</string>
     <string name="todo">To-do</string>
@@ -53,6 +53,9 @@
     <string name="keep_seaarching">Keep searching?</string>
     <string name="insert_a_keyword">Insert a keyword…</string>
     <string name="try_again">Try Again</string>
+    <string name="change_background_image">Change background image</string>
+    <string name="do_you_want_to_search_for_new_image">Search for new image?</string>
+    <string name="picture_selection_problem">There was a problem selecting the picture</string>
     <string-array name="more_items_drawer_activity">
         <item>Edit Category</item>
         <item>Delete Category</item>

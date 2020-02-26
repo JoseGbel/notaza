@@ -5,24 +5,24 @@ import android.os.Parcelable;
 
 public class Urls implements Parcelable{
 
-    private String thumb;
+    private String regular;
 
     private Urls (Parcel in){
 
-        this.thumb = in.readString();
+        this.regular = in.readString();
     }
 
-    public Urls(String thumb) {
+    public Urls(String regular) {
 
-        this.thumb = thumb;
+        this.regular = regular;
     }
 
-    public String getThumb() {
-        return thumb;
+    public String getRegular() {
+        return regular;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
+    public void setRegular(String regular) {
+        this.regular = regular;
     }
 
     public static final Creator<Urls> CREATOR = new Creator<Urls>() {
@@ -44,6 +44,6 @@ public class Urls implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.thumb);
+        dest.writeString(this.regular);
     }
 }

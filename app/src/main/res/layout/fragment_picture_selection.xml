@@ -51,7 +51,7 @@
                     android:padding="8dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:id="@+id/ll_try_again"
+                    android:id="@+id/searchForPictureLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -72,12 +72,12 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/tryAgainBtn"
+                    android:id="@+id/searchBtnChangePicture"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="16dp"
-                    android:layout_toEndOf="@+id/ll_try_again"
+                    android:layout_toEndOf="@+id/searchForPictureLayout"
                     android:text="@string/try_again"
                     style="@style/ButtonStyle">
 

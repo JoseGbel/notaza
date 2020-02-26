@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.Gson;
 
+
 public class UnsplashPic implements Parcelable {
 
     private String id;
@@ -76,7 +77,7 @@ public class UnsplashPic implements Parcelable {
         dest.writeString(this.id);
         dest.writeParcelable(this.user, flags);
         dest.writeParcelable(this.links, flags);
-        dest.writeParcelableArray(new Parcelable[]{this.user, this.urls}, flags);
+        dest.writeParcelableArray(new Parcelable[]{this.user, this.urls, this.links}, flags);
     }
 
     public static UnsplashPic createFromString(String string) {

@@ -20,10 +20,10 @@
         <menu>
             <item
                 android:id="@+id/edit_category_menu_item"
-                android:title="@string/edit_category" />
+                android:title="@string/edit_information" />
             <item
-                android:id="@+id/delete_category_menu_item"
-                android:title="@string/delete_category" />
+                android:id="@+id/change_picture_menu_item"
+                android:title="@string/change_background_image" />
         </menu>
     </item>
 

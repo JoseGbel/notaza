@@ -11,7 +11,6 @@ public class CategoryViewModel extends AndroidViewModel {
 
     private CategoryRepository categoryRepository;
     private LiveData<List<Category>> mAllCategories;
-    private Category mCategory;
 
     public CategoryViewModel(Application application) {
         super(application);
@@ -21,7 +20,7 @@ public class CategoryViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Category>> getAllCategories() { return mAllCategories; }
-    public Category getCategory(int id) { return mCategory; }
+    public Category getCategoryById(int id) { return categoryRepository.getCategoryBy(id); }
     public void insert(Category category) { categoryRepository.insert(category); }
     public void delete(Category category) { categoryRepository.delete(category); }
     public void update(CategoryRepository.MyTaskParams params) {

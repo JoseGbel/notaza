@@ -59,7 +59,7 @@ public class PicSelectionRecyclerViewAdapter extends RecyclerView.Adapter<PicSel
         viewHolder.artistLink.setMovementMethod(LinkMovementMethod.getInstance());
         viewHolder.unsplashLink.setMovementMethod(LinkMovementMethod.getInstance());
         Glide.with(context)
-                .load(pic.getUrls().getThumb())
+                .load(pic.getUrls().getRegular())
                 .into(viewHolder.imageView);
     }
 
@@ -91,7 +91,8 @@ public class PicSelectionRecyclerViewAdapter extends RecyclerView.Adapter<PicSel
             imageView = itemView.findViewById(R.id.unsplash_imageview);
             artistLink = itemView.findViewById(R.id.artist_name);
             unsplashLink = itemView.findViewById(R.id.unsplash_name);
-            imageView.setOnClickListener(v -> listener.onPictureSelected(pictureList.get(getAdapterPosition()), itemView));
+            imageView.setOnClickListener(v ->
+                    listener.onPictureSelected(pictureList.get(getAdapterPosition()), itemView));
         }
 
     }

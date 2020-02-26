@@ -106,7 +106,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                             bundle.putInt(EXTRA_ID, id);
                             replyIntent.putExtra(EXTRA_BUNDLE, bundle);
                             setResult(RESULT_OK, replyIntent);
-                            CategoryActivity.editingCategory = true;
+                            CategoryActivity.editingCategoryDetails = true;
                         }
                         finish();
                     //}

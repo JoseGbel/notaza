@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import remcode.apps.notaza.model.Category;
+import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
 
 @Dao
 public interface CategoryDao {
@@ -29,7 +30,7 @@ public interface CategoryDao {
     Category getCategory(int id);
 
     @Query ("UPDATE category_table " +
-            "SET name = :name, description = :description, type = :type " +
+            "SET name = :name, description = :description, type = :type, picture = :picture " +
             "WHERE id = :id")
-    void update(int id, String name, String description, int type);
+    void update(int id, String name, String description, int type, UnsplashPic picture);
 }

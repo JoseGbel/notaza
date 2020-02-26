@@ -16,6 +16,6 @@
 //
 //    @TypeConverter
 //    public static String toString(Urls value) {
-//        return value == null ? null : value.getThumb();
+//        return value == null ? null : value.getRegular();
 //    }
 //}

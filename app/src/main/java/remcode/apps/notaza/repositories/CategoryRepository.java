@@ -5,12 +5,13 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import java.util.List;
 import remcode.apps.notaza.model.Category;
+import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
 
 public class CategoryRepository {
 
     private CategoryDao mCategoryDao;
     private LiveData<List<Category>> mAllCategories;
-    private Category mCategory;
+    private LiveData<Category> mCategory;
 
     CategoryRepository(Application application){
         SkillRoomDatabase db = SkillRoomDatabase.getDatabase(application);
@@ -22,7 +23,7 @@ public class CategoryRepository {
         return mAllCategories;
     }
 
-    public Category getCategory(int id){ return mCategory; }
+    public Category getCategoryBy(int id){ return mCategoryDao.getCategory(id); }
 
     public void insert (Category category) {
         new insertAsyncTask(mCategoryDao).execute(category);
@@ -64,26 +65,27 @@ public class CategoryRepository {
             mAsyncTaskDao.update(params[0].getId(),
                     params[0].getName(),
                     params[0].getDescription(),
-                    params[0].getType());
+                    params[0].getType(),
+                    params[0].getPicture());
             return null;
         }
     }
 
     private static class insertAsyncTask extends AsyncTask<Category, Void, Void> {
 
+
         private CategoryDao mAsyncTaskDao;
 
         insertAsyncTask(CategoryDao dao) {
             mAsyncTaskDao = dao;
         }
-
         @Override
         protected Void doInBackground(final Category... params) {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
-    }
 
+    }
     public static class MyTaskParams {
 
         int id;
@@ -91,18 +93,34 @@ public class CategoryRepository {
         String description;
         int type;
 
-        public MyTaskParams(int id, String name, String description, int experience) {
+        UnsplashPic pic;
+
+        public MyTaskParams(int id, String name, String description, int type, UnsplashPic pic) {
             this.name = name;
             this.description = description;
             this.id = id;
-            this.type = experience;
+            this.type = type;
+            this.pic = pic;
         }
 
-        public int getId() { return id; }
-        public String getName() { return name; }
-        public String getDescription() { return description; }
-        public int getType() { return type; }
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public UnsplashPic getPicture() {
+            return pic;
+        }
     }
-
-
 }

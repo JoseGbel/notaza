@@ -22,7 +22,7 @@
     <string name="selectExperiencePlease">Seleccione su nivel de experiencia</string>
     <string name="category_s_image">Imagen de la categoría</string>
     <string name="UnsplashStringName">Unsplash</string>
-    <string name="edit_category">Editar Categoría</string>
+    <string name="edit_information">Editar informacion</string>
     <string name="delete_category">Eliminar Categoría</string>
     <string name="category_menu">Menu Categoría</string>
     <string name="todo">Listas</string>
@@ -59,6 +59,13 @@
     <string name="insert_a_keyword">Inserta una palabra clave…</string>
     <string name="try_again">Reintentar</string>
     <string name="search">Buscar</string>
+    <string name="do_you_want_to_search_for_new_image">
+        Buscar una nueva imagen?
+    </string>
+    <string name="change_background_image">Cambiar imagen de fondo</string>
+    <string name="picture_selection_problem">
+        Se produjo un problema mientras seleccionabas esta imagen
+    </string>
     <string-array name="more_items_drawer_activity">
         <item>Editar Categoría</item>
         <item>Eliminar Categoría</item>

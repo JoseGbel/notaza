@@ -87,9 +87,9 @@ public class CategoryListAdapter
             viewHolder.descriptionTv.setText(currentCategory.getMDescription());
             if (currentCategory.getMPicture() != null){
                 if (currentCategory.getMPicture().getUrls() != null){
-                    if (currentCategory.getMPicture().getUrls().getThumb() != null){
+                    if (currentCategory.getMPicture().getUrls().getRegular() != null){
                         Glide.with(context)
-                                .load(currentCategory.getMPicture().getUrls().getThumb())
+                                .load(currentCategory.getMPicture().getUrls().getRegular())
                                 .into(viewHolder.imageView);
                     }
                 }

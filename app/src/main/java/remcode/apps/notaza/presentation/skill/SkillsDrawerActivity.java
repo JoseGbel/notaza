@@ -1,14 +1,12 @@
 package remcode.apps.notaza.presentation.skill;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,36 +23,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
-
 import remcode.apps.notaza.model.Category;
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.model.Skill;
 import remcode.apps.notaza.presentation.category.CategoryActivity;
 import remcode.apps.notaza.presentation.adapters.RecyclerItemTouchHelper;
 import remcode.apps.notaza.presentation.adapters.SkillListAdapter;
+import remcode.apps.notaza.presentation.category.ChangePictureActivity;
 import remcode.apps.notaza.presentation.category.EditCategoryActivity;
-import remcode.apps.notaza.repositories.CategoryViewModel;
+import remcode.apps.notaza.presentation.category.PicDownloaderImp;
 import remcode.apps.notaza.repositories.SkillRepository;
 import remcode.apps.notaza.repositories.SkillViewModel;
 import remcode.apps.notaza.repositories.SkillViewModelFactory;
+import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
+
+import static remcode.apps.notaza.unsplashapi.service.UnsplashService.CLIENT_ID;
 
 public class SkillsDrawerActivity extends AppCompatActivity
         implements SkillListAdapter.SkillListAdapterListener,
-        RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+        RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
 
     public static final int NEW_SKILL_ACTIVITY_REQUEST_CODE = 1;
     private static final int EDIT_SKILL_ACTIVITY_REQUEST_CODE = 2;
     private static final int EDIT_CATEGORY_ACTIVITY_REQUEST_CODE = 3;
+    private static final int CHANGE_PICTURE_REQUEST_CODE = 4;
     public static final String EXTRA_BUNDLE_EDITED_CATEGORY = "remcode.apps.notaza.BUNDLE";
-
     private SkillListAdapter mRecyclerViewAdapter;
     private SkillViewModel mSkillViewModel;
     private CoordinatorLayout coordinatorLayout;
     static private Category currentCategory;
     private SearchView searchView;
     public static boolean isEditing;
-    private CategoryViewModel mCategoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,31 +98,25 @@ public class SkillsDrawerActivity extends AppCompatActivity
                 .get(SkillViewModel.class);
 
         mSkillViewModel.getAllSkills(currentCategory.getMName())
-                .observe(this, new Observer<List<Skill>>() {
-            @Override
-            public void onChanged(@Nullable final List<Skill> skills) {
-                // Update the cached copy of the skills in the adapter.
-                mRecyclerViewAdapter.setSkills(skills);
-            }
-        });
+                .observe(this, skills -> {
+                    // Update the cached copy of the skills in the adapter.
+                    mRecyclerViewAdapter.setSkills(skills);
+                });
 
         setFAB();
     }
 
     private void setFAB() {
         FloatingActionButton mFab = findViewById(R.id.fab_drawer);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Get a reference of the current category
-                Bundle received = getIntent().getExtras();
-                Intent intent =
-                        new Intent (SkillsDrawerActivity.this, NewSkillActivity.class);
+        mFab.setOnClickListener(view -> {
+            // Get a reference of the current category
+            Bundle received = getIntent().getExtras();
+            Intent intent =
+                    new Intent (SkillsDrawerActivity.this, NewSkillActivity.class);
 
-                assert received != null;
-                intent.putExtras(received);
-                startActivityForResult(intent, NEW_SKILL_ACTIVITY_REQUEST_CODE);
-            }
+            assert received != null;
+            intent.putExtras(received);
+            startActivityForResult(intent, NEW_SKILL_ACTIVITY_REQUEST_CODE);
         });
     }
 
@@ -141,6 +134,24 @@ public class SkillsDrawerActivity extends AppCompatActivity
                         bundle.getString(NewSkillActivity.EXTRA_CATEGORY));
 
                 mSkillViewModel.insert(skill);
+            }
+        }
+
+        if (requestCode == CHANGE_PICTURE_REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                String pictureStringified = data.getStringExtra("NewPictureObject");
+
+                Intent backToCategoryActivity = new Intent(SkillsDrawerActivity.this,
+                        CategoryActivity.class);
+
+                backToCategoryActivity.putExtra(
+                        ChangePictureActivity.EXTRA_PIC_STRING, pictureStringified);
+                backToCategoryActivity.putExtra(
+                        ChangePictureActivity.EXTRA_ID, currentCategory.getMId());
+                // TODO think of a new way to avoid this static coupling. State-driven dev?
+                CategoryActivity.editingPicture = true;
+
+                startActivity(backToCategoryActivity);
             }
         }
 
@@ -169,7 +180,6 @@ public class SkillsDrawerActivity extends AppCompatActivity
                         Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
     @Override
@@ -194,15 +204,11 @@ public class SkillsDrawerActivity extends AppCompatActivity
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
                     .make(coordinatorLayout, name + getString(R.string.removedFromList), Snackbar.LENGTH_LONG);
-            snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    // undo is selected, restore the deleted skill
-                    mRecyclerViewAdapter.restoreSkill(deletedSkill, deletedIndex);
-                    // Insert the deletedSkill in the database again
-                    mSkillViewModel.insert(deletedSkill);
-                }
+            snackbar.setAction(getString(R.string.undo), view -> {
+                // undo is selected, restore the deleted skill
+                mRecyclerViewAdapter.restoreSkill(deletedSkill, deletedIndex);
+                // Insert the deletedSkill in the database again
+                mSkillViewModel.insert(deletedSkill);
             });
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
@@ -245,21 +251,23 @@ public class SkillsDrawerActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
             case R.id.actionsearch_main:
                 return true;
-            case R.id.delete_category_menu_item:
-                Toast.makeText(SkillsDrawerActivity.this,
-                        "Delete Category", Toast.LENGTH_SHORT)
-                .show();
+
+            case (R.id.change_picture_menu_item):
+                Intent changePicture = new Intent(SkillsDrawerActivity.this,
+                        ChangePictureActivity.class);
+                changePicture.putExtra("pictureToChange", currentCategory.getMPicture()
+                        .stringify());
+                startActivityForResult(changePicture, CHANGE_PICTURE_REQUEST_CODE);
                 return true;
+
             case R.id.edit_category_menu_item:
-                Intent intent = new Intent(SkillsDrawerActivity.this, EditCategoryActivity.class);
+                Intent intent = new Intent(
+                        SkillsDrawerActivity.this, EditCategoryActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", currentCategory.getMId());
                 bundle.putString("name", currentCategory.getMName());
@@ -268,13 +276,11 @@ public class SkillsDrawerActivity extends AppCompatActivity
                 if(currentCategory.getMType()!=null)
                     bundle.putInt("categoryType", currentCategory.getMType());
                 intent.putExtras(bundle);
-//                editingCategory = true;
                 startActivityForResult(intent, EDIT_CATEGORY_ACTIVITY_REQUEST_CODE);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-        //noinspection SimplifiableIfStatement
     }
 
     @Override
@@ -307,7 +313,6 @@ public class SkillsDrawerActivity extends AppCompatActivity
         bundle.putInt("experience", skill.getMExperience());
         bundle.putString("category", skill.getMCategory());
         intent.putExtras(bundle);
-//        editingCategory = true;
         startActivityForResult(intent, EDIT_SKILL_ACTIVITY_REQUEST_CODE);
     }
 }

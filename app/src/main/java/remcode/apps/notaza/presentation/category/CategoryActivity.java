@@ -1,13 +1,12 @@
 package remcode.apps.notaza.presentation.category;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +25,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.google.android.play.core.install.model.AppUpdateType;
 
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import remcode.apps.notaza.Domain.AppController;
 import remcode.apps.notaza.model.Category;
@@ -45,7 +46,9 @@ public class CategoryActivity extends AppCompatActivity
 
     public static final int NEW_SKILL_ACTIVITY_REQUEST_CODE = 1;
     private static final int EDIT_CATEGORY_ACTIVITY_REQUEST_CODE = 3;
-    public static boolean editingCategory;
+    private static final int UPDATE_PICTURE = 4;
+    public static boolean editingCategoryDetails;
+    public static boolean editingPicture;
 
     private CategoryListAdapter mRecyclerViewAdapter;
     private CategoryViewModel mCategoryViewModel;
@@ -100,6 +103,10 @@ public class CategoryActivity extends AppCompatActivity
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ChangePictureActivity.UPDATE_PICTURE  && resultCode == RESULT_OK){
+            UnsplashPic newPicture = UnsplashPic.createFromString(
+                    data.getStringExtra(ChangePictureActivity.EXTRA_PIC_STRING));
+        }
         if (requestCode == NEW_SKILL_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
             Bundle bundle = new Bundle(data.getBundleExtra(NewCategoryActivity.EXTRA_BUNDLE));
@@ -179,18 +186,46 @@ public class CategoryActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        if (editingCategory){
+        if (editingCategoryDetails){
             Bundle bundle = getIntent().getExtras()
                     .getBundle(SkillsDrawerActivity.EXTRA_BUNDLE_EDITED_CATEGORY);
 
-            String temp = bundle.getString(EditCategoryActivity.EXTRA_NAME);
-            mCategoryViewModel.update(new CategoryRepository.MyTaskParams(
-                    bundle.getInt(EditCategoryActivity.EXTRA_ID),
-                    bundle.getString(EditCategoryActivity.EXTRA_NAME),
-                    bundle.getString(EditCategoryActivity.EXTRA_DESCRIPTION),
-                    bundle.getInt(EditCategoryActivity.EXTRA_CATEGORYTYPE)));
+            int id = bundle.getInt(EditCategoryActivity.EXTRA_ID);
 
-            editingCategory = false;
+            // Run this code in a background thread
+            ExecutorService service = Executors.newFixedThreadPool(4);
+            service.submit(() -> {
+                mCategoryViewModel.update(new CategoryRepository.MyTaskParams(
+                        bundle.getInt(EditCategoryActivity.EXTRA_ID),
+                        bundle.getString(EditCategoryActivity.EXTRA_NAME),
+                        bundle.getString(EditCategoryActivity.EXTRA_DESCRIPTION),
+                        bundle.getInt(EditCategoryActivity.EXTRA_CATEGORYTYPE),
+                        mCategoryViewModel.getCategoryById(id).getMPicture()));
+            });
+
+            editingCategoryDetails = false;
+        }
+        if(editingPicture){
+            int id = getIntent()
+                    .getExtras()
+                    .getInt(ChangePictureActivity.EXTRA_ID);
+            String stringifiedPic = getIntent()
+                    .getExtras()
+                    .getString(ChangePictureActivity.EXTRA_PIC_STRING);
+
+            // Run this code in a background thread
+            ExecutorService service = Executors.newFixedThreadPool(4);
+            service.submit(() -> {
+                Category cat = mCategoryViewModel.getCategoryById(id);
+
+                mCategoryViewModel.update(new CategoryRepository.MyTaskParams(cat.getMId(),
+                        cat.getMName(), cat.getMDescription(),
+                        cat.getMType(), UnsplashPic.createFromString(stringifiedPic)
+                ));
+
+            });
+
+            editingPicture = false;
         }
     }
 

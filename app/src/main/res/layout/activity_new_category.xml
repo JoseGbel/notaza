@@ -3,13 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout android:layout_width="match_parent"
+    <com.google.android.material.appbar.AppBarLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:theme="@style/AppTheme.AppBarOverlay"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <android.support.v7.widget.Toolbar android:layout_width="match_parent"
+        <androidx.appcompat.widget.Toolbar android:layout_width="match_parent"
             android:id="@+id/add_new_category_toolbar"
             android:layout_height="?attr/actionBarSize"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +17,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             xmlns:android="http://schemas.android.com/apk/res/android" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"

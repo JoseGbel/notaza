@@ -1,8 +1,8 @@
 package remcode.apps.notaza.repositories;
 
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 public class SkillViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 

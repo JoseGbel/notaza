@@ -25,9 +25,8 @@ public class SkillViewModel extends AndroidViewModel {
     }
 
     public void insert(Skill skill) { skillRepository.insert(skill); }
+
     public void delete(Skill skill) { skillRepository.delete(skill); }
 
-    public void update(SkillRepository.MyTaskParams params) {
-        skillRepository.update(params);
-    }
+    public void update(SkillRepository.MyTaskParams params) { skillRepository.update(params); }
 }

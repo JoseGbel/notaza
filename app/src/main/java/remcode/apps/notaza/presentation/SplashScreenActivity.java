@@ -3,12 +3,9 @@ package remcode.apps.notaza.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.presentation.category.CategoryActivity;
 
-//TODO clean up the code to make it more readable
-//TODO create an offline mode.
 public class SplashScreenActivity extends AppCompatActivity
     {
 
@@ -23,7 +20,9 @@ public class SplashScreenActivity extends AppCompatActivity
             public void run() {
                 try {
                     sleep(2000);
-                    Intent mainActivity = new Intent(SplashScreenActivity.this, CategoryActivity.class);
+                    Intent mainActivity = new Intent(
+                            SplashScreenActivity.this, CategoryActivity.class);
+
                     startActivity(mainActivity);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -43,5 +42,4 @@ public class SplashScreenActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
     }
-
 }

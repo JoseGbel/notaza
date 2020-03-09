@@ -17,10 +17,6 @@ public class UnsplashResponse {
         return results;
     }
 
-    public void downloadPicture(String url){
-
-    }
-
     public void setResults(ArrayList<UnsplashPic> results) {
         this.results = results;
     }

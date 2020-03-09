@@ -11,7 +11,6 @@ public class CategoryRepository {
 
     private CategoryDao mCategoryDao;
     private LiveData<List<Category>> mAllCategories;
-    private LiveData<Category> mCategory;
 
     CategoryRepository(Application application){
         SkillRoomDatabase db = SkillRoomDatabase.getDatabase(application);
@@ -19,11 +18,11 @@ public class CategoryRepository {
         mAllCategories = mCategoryDao.getAllCategories();
     }
 
-    public LiveData<List<Category>> getAllCategories(){
+    LiveData<List<Category>> getAllCategories(){
         return mAllCategories;
     }
 
-    public Category getCategoryBy(int id){ return mCategoryDao.getCategory(id); }
+    Category getCategoryBy(int id){ return mCategoryDao.getCategory(id); }
 
     public void insert (Category category) {
         new insertAsyncTask(mCategoryDao).execute(category);
@@ -35,8 +34,7 @@ public class CategoryRepository {
 
     public void update(MyTaskParams params) { new updateAsyncTask(mCategoryDao).execute(params); }
 
-    // AsyncTask methods implementations
-    // ---------------------------------
+    // AsyncTask implementations
     private static class deleteAsyncTask extends AsyncTask<Category, Void, Void> {
 
         private CategoryDao mAsyncTaskDao;
@@ -73,7 +71,6 @@ public class CategoryRepository {
 
     private static class insertAsyncTask extends AsyncTask<Category, Void, Void> {
 
-
         private CategoryDao mAsyncTaskDao;
 
         insertAsyncTask(CategoryDao dao) {
@@ -84,15 +81,14 @@ public class CategoryRepository {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
-
     }
+
     public static class MyTaskParams {
 
         int id;
         String name;
         String description;
         int type;
-
         UnsplashPic pic;
 
         public MyTaskParams(int id, String name, String description, int type, UnsplashPic pic) {

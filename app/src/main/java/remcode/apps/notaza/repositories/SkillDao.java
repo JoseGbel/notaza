@@ -18,13 +18,13 @@ public interface SkillDao {
     @Delete
     void delete(Skill skill);
 
-    // This method is kept in case deletion of all the skills in the future is needed
-    @Query("DELETE FROM skill_table")
-    void deleteAll();
-
-    @Query("SELECT * FROM skill_table WHERE category = :category ORDER BY name ASC")
+    @Query("SELECT * FROM skill_table " +
+            "WHERE category = :category " +
+            "ORDER BY name ASC")
     LiveData<List<Skill>> getAllSkills(String category);
 
-    @Query ("UPDATE skill_table SET name = :name, description = :description, experience = :experience WHERE id = :id")
+    @Query ("UPDATE skill_table " +
+            "SET name = :name, description = :description, experience = :experience " +
+            "WHERE id = :id")
     void update(int id, String name, String description, int experience);
 }

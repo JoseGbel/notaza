@@ -17,10 +17,8 @@ import remcode.apps.notaza.model.Skill;
 import remcode.apps.notaza.utils.DateTypeConverter;
 import remcode.apps.notaza.utils.UnsplashPicTypeConverter;
 
-//TODO clean up this class to be more readable
 @Database(entities = {Skill.class, Category.class}, version = 7)
-@TypeConverters({DateTypeConverter.class, /* LinksTypeConverter.class,
-        UrlsTypeConverter.class, UserTypeConverter.class*/ UnsplashPicTypeConverter.class})
+@TypeConverters({DateTypeConverter.class, UnsplashPicTypeConverter.class})
 
 public abstract class SkillRoomDatabase extends RoomDatabase {
 
@@ -30,8 +28,6 @@ public abstract class SkillRoomDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "skill_database";
 
     private static volatile SkillRoomDatabase INSTANCE;
-
-    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
     static SkillRoomDatabase getDatabase(final Context context){
         if (INSTANCE == null){
@@ -50,20 +46,6 @@ public abstract class SkillRoomDatabase extends RoomDatabase {
             }
         }
         return INSTANCE;
-    }
-
-    private void updateDatabaseCreated(final Context context) {
-        if (context.getDatabasePath(DATABASE_NAME).exists()) {
-            setDatabaseCreated();
-        }
-    }
-
-    private void setDatabaseCreated(){
-        mIsDatabaseCreated.postValue(true);
-    }
-
-    public LiveData<Boolean> getDatabaseCreated() {
-        return mIsDatabaseCreated;
     }
 
     private static RoomDatabase.Callback sRoomDatabaseCallback =
@@ -87,8 +69,6 @@ public abstract class SkillRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
 
-            //To repopulate a clean database uncomment next line of code
-            //mDao.deleteAll();
             return null;
         }
     }

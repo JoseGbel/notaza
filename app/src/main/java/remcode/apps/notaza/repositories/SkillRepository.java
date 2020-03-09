@@ -13,14 +13,14 @@ public class SkillRepository {
     private SkillDao mSkillDao;
     private LiveData<List<Skill>> mAllSkills;
 
-    public SkillRepository (Application application, String category){
+    SkillRepository(Application application, String category){
 
         SkillRoomDatabase db = SkillRoomDatabase.getDatabase(application);
         mSkillDao = db.skillDao();
         mAllSkills = mSkillDao.getAllSkills(category);
     }
 
-    public LiveData<List<Skill>> getAllSkills(String category){
+    LiveData<List<Skill>> getAllSkills(String category){
 
         mAllSkills = mSkillDao.getAllSkills(category);
         return mAllSkills;
@@ -50,7 +50,6 @@ public class SkillRepository {
             return null;
         }
     }
-
 
     public static class MyTaskParams {
 

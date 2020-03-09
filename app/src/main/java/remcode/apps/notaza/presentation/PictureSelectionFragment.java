@@ -34,18 +34,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PictureSelectionFragment extends Fragment
         implements PicSelectionRecyclerViewAdapter.RecyclerViewAdapterListener {
 
-    public static final String EXTRA_PIC_URL = "165156";
     private static final String TAG = "unsplash";
-    private final String CLIENT_ID = "7b3b9ec9a8f3057b1831c2d14d6af52e18b6bd9ba2469eec612d75d1ac007676";
-    private final String urlBase = "https://api.unsplash.com/";
     private Retrofit retrofit;
-
     private RecyclerView recyclerView;
     private PicSelectionRecyclerViewAdapter picSelectionRecyclerViewAdapter;
     private FragmentCallback fragmentCallback; //Data passer to the activity
     private Button tryAgainBtn;
     private EditText tryAgainEditText;
     private String keyword;
+
+    // TODO code smell
     private static View previousView;
 
     public PictureSelectionFragment(){
@@ -80,7 +78,7 @@ public class PictureSelectionFragment extends Fragment
         super.onStart();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(urlBase)
+                .baseUrl(UnsplashService.urlBase)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         recyclerView.setHasFixedSize(true);
@@ -99,8 +97,13 @@ public class PictureSelectionFragment extends Fragment
         getData(keyword);
 
         tryAgainBtn.setOnClickListener(view -> {
-            clearData(); // Clear previous pictures from list
-            getData(String.valueOf(tryAgainEditText.getText())); // Request pics from new keyword
+
+            // Clear previous pictures from list
+            clearData();
+
+            // Request pics from new keyword
+            getData(String.valueOf(tryAgainEditText.getText()));
+
             hideKeyboard(getActivity());
         });
     }
@@ -112,17 +115,20 @@ public class PictureSelectionFragment extends Fragment
         keyword= getArguments().getString("categoryName");
     }
 
-    void clearData(){
+    private void clearData(){
         picSelectionRecyclerViewAdapter.deletePictures();
     }
 
     private void getData(String keyword) {
         UnsplashService service = retrofit.create(UnsplashService.class);
-        Call<UnsplashResponse> pictureResponseCall = service.getPictureList(keyword, CLIENT_ID);
+        Call<UnsplashResponse> pictureResponseCall = service.getPictureList(
+                keyword, UnsplashService.CLIENT_ID);
 
         pictureResponseCall.enqueue(new Callback<UnsplashResponse>() {
             @Override
-            public void onResponse(Call<UnsplashResponse> call, Response<UnsplashResponse> response) {
+            public void onResponse(Call<UnsplashResponse> call,
+                                   Response<UnsplashResponse> response) {
+
                 if (response.isSuccessful()){
 
                     UnsplashResponse pictureResponse = response.body();
@@ -146,15 +152,17 @@ public class PictureSelectionFragment extends Fragment
     public void onPictureSelected(final UnsplashPic unsplashPic,
                                   View currentView) {
 
+        // If not null there is a picture selected; set its alpha to max
         if (previousView != null) {
             ImageView previousImageView = previousView.findViewById(R.id.unsplash_imageview);
             previousImageView.setImageAlpha(255);
         }
 
-        // TODO SOME ANIMATIONS
+        // Change alpha to 60 to show a selected item effect
         ImageView currentImageView = currentView.findViewById(R.id.unsplash_imageview);
         currentImageView.setImageAlpha(60);
         previousView = currentView;
+
         Snackbar snackbar = Snackbar
                 .make(recyclerView, getString(R.string.selectThisPictureQuestion), Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction(getString(R.string.YES), view -> fragmentCallback.onDataSent(unsplashPic));
@@ -178,11 +186,13 @@ public class PictureSelectionFragment extends Fragment
         Log.i (TAG, "Detaching fragment");
     }
 
-    public static void hideKeyboard(Activity activity) {
+    private static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(
                 Activity.INPUT_METHOD_SERVICE);
+
         // Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
+
         // If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
             view = new View(activity);

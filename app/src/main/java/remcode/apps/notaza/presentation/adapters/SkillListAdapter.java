@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.model.Skill;
-import remcode.apps.notaza.utils.ParseExperience;
+import remcode.apps.notaza.utils.ExperienceParser;
 
 public class SkillListAdapter
         extends RecyclerView.Adapter<SkillListAdapter.SkillViewHolder> implements Filterable {
@@ -174,7 +174,7 @@ public class SkillListAdapter
                     for (Skill s : mSkills){
                         if (s.getMName().toLowerCase().contains(charString.toLowerCase()) ||
                                 s.getMDescription().contains(charString.toLowerCase())    ||
-                                ParseExperience.toString(s.getMExperience(), context)
+                                ExperienceParser.toString(s.getMExperience(), context)
                                         .toLowerCase()
                                         .contains(charString.toLowerCase())){
                             filteredList.add(s);

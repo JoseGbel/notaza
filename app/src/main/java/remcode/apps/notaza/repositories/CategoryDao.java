@@ -19,10 +19,6 @@ public interface CategoryDao {
     @Delete
     void delete(Category category);
 
-    // This method is kept in case deletion of all categories in the future is needed
-    @Query("DELETE FROM category_table")
-    void deleteAll();
-
     @Query("SELECT * from category_table ORDER BY name ASC")
     LiveData<List<Category>> getAllCategories();
 

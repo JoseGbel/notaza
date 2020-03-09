@@ -4,7 +4,7 @@ import android.content.Context;
 
 import remcode.apps.notaza.R;
 
-public class ParseExperience {
+public class ExperienceParser {
 
     public static String toString (Integer integer, Context context){
 

@@ -21,9 +21,7 @@ public class UnsplashPic implements Parcelable {
     }
 
     UnsplashPic (Parcel in){
-
         Parcelable[] data = new Parcelable[3];
-
         this.id = in.readString();
         data[0] = in.readParcelable(User.class.getClassLoader());
         data[1] = in.readParcelable(Urls.class.getClassLoader());

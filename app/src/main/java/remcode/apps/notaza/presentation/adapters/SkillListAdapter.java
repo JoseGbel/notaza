@@ -34,7 +34,6 @@ public class SkillListAdapter
     public class SkillViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout skillLinearLayout;
-
         TextView nameTv, descriptionTv, dateTv, experienceTv;
 
         SkillViewHolder(View view){
@@ -45,15 +44,12 @@ public class SkillListAdapter
             dateTv = view.findViewById(R.id.skill_date);
             experienceTv = view.findViewById(R.id.skill_experience);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // send selected skill in callback
-                    try{
-                        listener.onSkillSelected(mSkillsFiltered.get(getAdapterPosition()));
-                    }catch (Exception e){
-                        Log.e ("Boom", e.toString());
-                    }
+            view.setOnClickListener(view1 -> {
+                // send selected skill in callback
+                try{
+                    listener.onSkillSelected(mSkillsFiltered.get(getAdapterPosition()));
+                }catch (Exception e){
+                    Log.e ("Boom", e.toString());
                 }
             });
         }

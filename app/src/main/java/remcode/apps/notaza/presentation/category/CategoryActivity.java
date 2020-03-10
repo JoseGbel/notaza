@@ -186,6 +186,7 @@ public class CategoryActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+
         if (editingCategoryDetails){
             Bundle bundle = getIntent().getExtras()
                     .getBundle(SkillsDrawerActivity.EXTRA_BUNDLE_EDITED_CATEGORY);
@@ -205,6 +206,7 @@ public class CategoryActivity extends AppCompatActivity
 
             editingCategoryDetails = false;
         }
+
         if(editingPicture){
             int id = getIntent()
                     .getExtras()
@@ -222,7 +224,6 @@ public class CategoryActivity extends AppCompatActivity
                         cat.getMName(), cat.getMDescription(),
                         cat.getMType(), UnsplashPic.createFromString(stringifiedPic)
                 ));
-
             });
 
             editingPicture = false;
@@ -306,7 +307,9 @@ public class CategoryActivity extends AppCompatActivity
 
 //            // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, name + getString(R.string.removedFromList), Snackbar.LENGTH_LONG);
+                    .make(coordinatorLayout, name + getString(R.string.removedFromList),
+                            Snackbar.LENGTH_LONG);
+
             snackbar.setAction(getString(R.string.undo), view -> {
                 // undo is selected, restore the deleted skill
                 mRecyclerViewAdapter.restoreCategories(deletedCategory, deletedIndex);

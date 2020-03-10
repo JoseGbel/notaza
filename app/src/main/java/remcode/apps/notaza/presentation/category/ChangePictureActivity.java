@@ -37,8 +37,6 @@ public class ChangePictureActivity extends AppCompatActivity implements
     public static final String EXTRA_ID = "1251151";
     private static final String TAG = "unsplash";
     public static final int UPDATE_PICTURE = 515;
-    private final String CLIENT_ID = "7b3b9ec9a8f3057b1831c2d14d6af52e18b6bd9ba2469eec612d75d1ac007676";
-    private final String urlBase = "https://api.unsplash.com/";
     private Retrofit retrofit;
 
     private RecyclerView recyclerView;
@@ -73,7 +71,7 @@ public class ChangePictureActivity extends AppCompatActivity implements
         super.onStart();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(urlBase)
+                .baseUrl(UnsplashService.urlBase)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         recyclerView.setHasFixedSize(true);
@@ -101,11 +99,14 @@ public class ChangePictureActivity extends AppCompatActivity implements
 
     private void getData(String keyword) {
         UnsplashService service = retrofit.create(UnsplashService.class);
-        Call<UnsplashResponse> pictureResponseCall = service.getPictureList(keyword, CLIENT_ID);
+        Call<UnsplashResponse> pictureResponseCall = service.getPictureList(
+                keyword, UnsplashService.CLIENT_ID);
 
         pictureResponseCall.enqueue(new Callback<UnsplashResponse>() {
             @Override
-            public void onResponse(Call<UnsplashResponse> call, Response<UnsplashResponse> response) {
+            public void onResponse(Call<UnsplashResponse> call,
+                                   Response<UnsplashResponse> response) {
+
                 if (response.isSuccessful()){
 
                     UnsplashResponse pictureResponse = response.body();
@@ -142,7 +143,8 @@ public class ChangePictureActivity extends AppCompatActivity implements
         Snackbar snackbar = Snackbar
                 .make(recyclerView, getString(R.string.selectThisPictureQuestion), Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction(getString(R.string.YES), view -> {
-            Intent backToCategoryActivity = new Intent(this, SkillsDrawerActivity.class);
+            Intent backToCategoryActivity = new Intent(this,
+                    SkillsDrawerActivity.class);
             backToCategoryActivity.putExtra("NewPictureObject", unsplashPic.stringify());
             setResult(RESULT_OK, backToCategoryActivity);
             finish();
@@ -159,9 +161,12 @@ public class ChangePictureActivity extends AppCompatActivity implements
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(
                 Activity.INPUT_METHOD_SERVICE);
+
         // Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
-        // If no view currently has focus, create a new one, just so we can grab a window token from it
+
+        // If no view currently has focus, create a new one,
+        // just so we can grab a window token from it
         if (view == null) {
             view = new View(activity);
         }

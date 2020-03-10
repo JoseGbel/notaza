@@ -43,15 +43,12 @@ public class CategoryListAdapter
             descriptionTv = view.findViewById(R.id.category_description);
             imageView = view.findViewById(R.id.category_image);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // send selected skill in callback
-                    try {
-                        listener.onCategorySelected(mCategoriesFiltered.get(getAdapterPosition()));
-                    } catch (Exception e) {
-                        Log.e("Boom", e.toString());
-                    }
+            view.setOnClickListener(view1 -> {
+                // send selected skill in callback
+                try {
+                    listener.onCategorySelected(mCategoriesFiltered.get(getAdapterPosition()));
+                } catch (Exception e) {
+                    Log.e("Boom", e.toString());
                 }
             });
         }

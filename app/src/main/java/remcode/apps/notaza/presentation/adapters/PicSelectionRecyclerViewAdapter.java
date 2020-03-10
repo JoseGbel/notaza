@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
 
-public class PicSelectionRecyclerViewAdapter extends RecyclerView.Adapter<PicSelectionRecyclerViewAdapter.ViewHolder> {
+public class PicSelectionRecyclerViewAdapter
+        extends RecyclerView.Adapter<PicSelectionRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<UnsplashPic> pictureList;
     private Context context;

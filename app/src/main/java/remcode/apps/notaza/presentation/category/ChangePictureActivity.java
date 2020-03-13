@@ -35,14 +35,15 @@ public class ChangePictureActivity extends AppCompatActivity implements
 
     public static final String EXTRA_PIC_STRING = "165156";
     public static final String EXTRA_ID = "1251151";
-    private static final String TAG = "unsplash";
     public static final int UPDATE_PICTURE = 515;
+    private static final String TAG = "unsplash";
     private Retrofit retrofit;
-
     private RecyclerView recyclerView;
     private PicSelectionRecyclerViewAdapter picSelectionRecyclerViewAdapter;
     private Button searchBtn;
     private EditText tryAgainEditText;
+
+    // TODO think of a way to avoid this memory leak.
     private static View previousView;
 
     @Override

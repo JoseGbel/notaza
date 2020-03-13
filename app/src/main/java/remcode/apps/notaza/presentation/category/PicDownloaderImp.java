@@ -29,11 +29,10 @@ public class PicDownloaderImp {
 
         String urlBase = "https://api.unsplash.com/";
         retrofit = new Retrofit.Builder()
-                .baseUrl(urlBase)
+                .baseUrl(UnsplashService.urlBase)
                 .addConverterFactory(GsonConverterFactory.create())
                  .client(client)
                 .build();
-
     }
 
 

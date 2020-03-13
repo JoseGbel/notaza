@@ -17,6 +17,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 import remcode.apps.notaza.R;
 import remcode.apps.notaza.presentation.PictureSelectionFragment;
 import remcode.apps.notaza.unsplashapi.model.UnsplashPic;
+import remcode.apps.notaza.unsplashapi.service.UnsplashService;
 
 public class NewCategoryActivity extends AppCompatActivity implements PictureSelectionFragment.FragmentCallback {
 
@@ -25,7 +26,6 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
     public static final String EXTRA_DESCRIPTION = "my.apps.skillstracker.DESCRIPTION";
     public static final String EXTRA_UNSPLASHPICTURE = "my.apps.skillstracker.UNSPLASHPICTURE";
     public static final String EXTRA_TYPE = "my.apps.skillstracker.CATEGORYTYPE";
-    private final String CLIENT_ID = "7b3b9ec9a8f3057b1831c2d14d6af52e18b6bd9ba2469eec612d75d1ac007676";
 
     private EditText mEditCategoryNameView, mEditCategoryDescriptionView;
     private Boolean pictureSelected = false;
@@ -58,36 +58,32 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
 
         pictureSelectionFragment = new PictureSelectionFragment();
         continueButton.setOnClickListener(view -> {
+
             // No radio buttons selected
-            switch (mSegmentedGroup.getCheckedRadioButtonId()) {
-                case -1:
-                    Toast.makeText(
-                            getApplicationContext(),
-                            getString(R.string.categoryTypeSelectionNeeded),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                    break;
+            if (mSegmentedGroup.getCheckedRadioButtonId() == -1) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        getString(R.string.categoryTypeSelectionNeeded),
+                        Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                if (!TextUtils.isEmpty(mEditCategoryNameView.getText())) {
+                    categoryName = mEditCategoryNameView.getText().toString();
+                    categoryDescription = mEditCategoryDescriptionView.getText().toString();
+                    hideKeyboard(NewCategoryActivity.this);
+                    continueButton.setVisibility(Button.GONE);
 
-                default:
-                    if (!TextUtils.isEmpty(mEditCategoryNameView.getText())) {
+                    pictureSelected = true;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("categoryName", categoryName);
+                    pictureSelectionFragment.setArguments(bundle);
 
-                        categoryName = mEditCategoryNameView.getText().toString();
-                        categoryDescription = mEditCategoryDescriptionView.getText().toString();
-                        hideKeyboard(NewCategoryActivity.this);
-                        continueButton.setVisibility(Button.GONE);
-
-                        pictureSelected = true;
-                        Bundle bundle = new Bundle();
-                        bundle.putString("categoryName", categoryName);
-                        pictureSelectionFragment.setArguments(bundle);
-
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        transaction.add(R.id.fragment_container, pictureSelectionFragment)
-                                .addToBackStack(null)
-                                .commit();
-                    }
-                break;
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.add(R.id.fragment_container, pictureSelectionFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
         });
     }
@@ -135,11 +131,8 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
                 setResult(RESULT_OK, replyIntent);
 
                 String downloadLink = unsplashPic.getLinks()
-                        .getDownload_location() + "?client_id=" + CLIENT_ID;
+                        .getDownload_location() + "?client_id=" + UnsplashService.CLIENT_ID;
                 picDownloader.requestDownloadLink(downloadLink);
-                // TODO continue with downloader class!!!
-                // requestDownload the picture
-                //picDownloader.requestDownload(unsplashPic);
             }
             finish();
         });
@@ -158,13 +151,18 @@ public class NewCategoryActivity extends AppCompatActivity implements PictureSel
     }
 
     public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
+
         // Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
-        // If no view currently has focus, create a new one, just so we can grab a window token from it
+
+        // If no view currently has focus, create a new one,
+        // just so we can grab a window token from it
         if (view == null) {
             view = new View(activity);
         }
+
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

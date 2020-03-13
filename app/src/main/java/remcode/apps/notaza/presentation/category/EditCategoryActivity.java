@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import info.hoang8f.android.segmented.SegmentedGroup;
 import remcode.apps.notaza.R;
 
@@ -23,7 +22,6 @@ public class EditCategoryActivity extends AppCompatActivity {
     private EditText mEditCategoryNameView, mEditCategoryDescriptionView;
     private int id;
     private SegmentedGroup mSegmentedGroup;
-    private Button notesBtn, skillsBtn; //TODO Places todo , placesBtn, todoBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,12 +31,8 @@ public class EditCategoryActivity extends AppCompatActivity {
         mEditCategoryNameView = findViewById(R.id.edit_category_name);
         mEditCategoryDescriptionView = findViewById(R.id.edit_category_description);
         mSegmentedGroup = findViewById(R.id.categoryTypeSegmentedGroup);
-        notesBtn = findViewById(R.id.notesBtnSegGroup);
-        skillsBtn = findViewById(R.id.skillsBtnSegGroup);
-        //TODO Places todo
-//        placesBtn = findViewById(R.id.placesBtnSegGroup);
-//        todoBtn = findViewById(R.id.toDoBtnSegGroup);
-
+        Button notesBtn = findViewById(R.id.notesBtnSegGroup);
+        Button skillsBtn = findViewById(R.id.skillsBtnSegGroup);
         final Button button = findViewById(R.id.continue_button_new_category);
 
         Toolbar toolbar = findViewById(R.id.add_new_category_toolbar);
@@ -59,58 +53,38 @@ public class EditCategoryActivity extends AppCompatActivity {
             case 2:
                 skillsBtn.performClick();
                 break;
-            //TODO Places todo
-//            case 3:
-//                placesBtn.performClick();
-//                break;
-//            case 4:
-//                todoBtn.performClick();
-//                break;
             default:
                 break;
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+        button.setOnClickListener(view -> {
+            // No radio Buttons selected
+            if (mSegmentedGroup.getCheckedRadioButtonId() == -1)
+                Toast.makeText(
+                        getApplicationContext(),
+                        getString(R.string.categoryTypeSelectionNeeded),
+                        Toast.LENGTH_SHORT)
+                        .show();
 
-                // No radio Buttons selected
-                if (mSegmentedGroup.getCheckedRadioButtonId() == -1)
-                    Toast.makeText(
-                            getApplicationContext(),
-                            getString(R.string.categoryTypeSelectionNeeded),
-                            Toast.LENGTH_SHORT)
-                            .show();
+            else {
+                    Intent replyIntent = new Intent();
+                    if (TextUtils.isEmpty(mEditCategoryNameView.getText()))
+                        setResult(RESULT_CANCELED, replyIntent);
+                    else {
+                        String categoryName = mEditCategoryNameView.getText().toString();
+                        String categoryDescription =
+                                mEditCategoryDescriptionView.getText().toString();
 
-                else { //TODO Places todo
-//                    if (mSegmentedGroup.getCheckedRadioButtonId() == R.id.placesBtnSegGroup){
-//                        Toast.makeText(
-//                                getApplicationContext(),
-//                                "List of places are not available yet. " +
-//                                        "You can add a list of places as a Note list",
-//                                Toast.LENGTH_SHORT)
-//                                .show();
-//                    }else {
-                        Intent replyIntent = new Intent();
-                        if (TextUtils.isEmpty(mEditCategoryNameView.getText()))
-                            setResult(RESULT_CANCELED, replyIntent);
-
-                        else {
-                            String categoryName = mEditCategoryNameView.getText().toString();
-                            String categoryDescription =
-                                    mEditCategoryDescriptionView.getText().toString();
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString(EXTRA_NAME, categoryName);
-                            bundle.putString(EXTRA_DESCRIPTION, categoryDescription);
-                            bundle.putInt(EXTRA_CATEGORYTYPE, getCategoryType());
-                            bundle.putInt(EXTRA_ID, id);
-                            replyIntent.putExtra(EXTRA_BUNDLE, bundle);
-                            setResult(RESULT_OK, replyIntent);
-                            CategoryActivity.editingCategoryDetails = true;
-                        }
-                        finish();
-                    //}
-                }
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString(EXTRA_NAME, categoryName);
+                        bundle1.putString(EXTRA_DESCRIPTION, categoryDescription);
+                        bundle1.putInt(EXTRA_CATEGORYTYPE, getCategoryType());
+                        bundle1.putInt(EXTRA_ID, id);
+                        replyIntent.putExtra(EXTRA_BUNDLE, bundle1);
+                        setResult(RESULT_OK, replyIntent);
+                        CategoryActivity.editingCategoryDetails = true;
+                    }
+                    finish();
             }
         });
     }
@@ -122,11 +96,6 @@ public class EditCategoryActivity extends AppCompatActivity {
                 return 1;
             case R.id.skillsBtnSegGroup:
                 return 2;
-            //TODO Places todo
-//            case R.id.placesBtnSegGroup:
-//                return 3;
-//            case R.id.toDoBtnSegGroup:
-//                return 4;
             default:
                 return 0;
         }

@@ -45,6 +45,7 @@ public class SkillListAdapter
             experienceTv = view.findViewById(R.id.skill_experience);
 
             view.setOnClickListener(view1 -> {
+
                 // send selected skill in callback
                 try{
                     listener.onSkillSelected(mSkillsFiltered.get(getAdapterPosition()));

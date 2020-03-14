@@ -97,6 +97,7 @@ public class CategoryListAdapter
 
     public void removeCategory(int position) {
         getCategories().remove(position);
+
         // notify the item removed by position
         // to perform recycler view delete animations
         // NOTE: don't call notifyDataSetChanged()
@@ -105,6 +106,7 @@ public class CategoryListAdapter
 
     public void restoreCategories(Category category, int position) {
         getCategories().add(position, category);
+
         // notify item added by position
         notifyItemInserted(position);
     }

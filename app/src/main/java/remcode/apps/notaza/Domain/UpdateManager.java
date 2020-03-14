@@ -21,12 +21,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class UpdateManager implements Updatable {
 
-    public static final int MY_REQUEST_CODE = 100;
+    private static final int MY_REQUEST_CODE = 100;
 
-    AppUpdateManager appUpdateManager;
-    Context context;
+    private AppUpdateManager appUpdateManager;
+    private Context context;
 
-    public UpdateManager(Context context){
+    UpdateManager(Context context){
         appUpdateManager = AppUpdateManagerFactory.create(context);
         this.context = context;
     }

@@ -95,7 +95,6 @@ public class PicSelectionRecyclerViewAdapter
             imageView.setOnClickListener(v ->
                     listener.onPictureSelected(pictureList.get(getAdapterPosition()), itemView));
         }
-
     }
 
     public interface RecyclerViewAdapterListener {

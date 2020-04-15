@@ -1,3 +1,5 @@
+[![JoseGbel](https://circleci.com/gh/JoseGbel/notaza.svg?style=shield)](https://circleci.com/gh/JoseGbel/notaza)
+
 # Notaza
 Android app that helps you to record your notes on a nice looking categories. It is very simple, effective and pleasant way to keep track of anything you need to keep track of.
 
